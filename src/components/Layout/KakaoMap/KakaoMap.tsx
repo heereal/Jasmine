@@ -36,26 +36,55 @@ export default function KaokaoMap () {
     
         // 마커 여러 개 표시하기
         data.forEach((store) => {
-            new window.kakao.maps.Marker({
+            const marker = new window.kakao.maps.Marker({
                 map: map, // 마커를 표시할 지도
                 title: store.FCLTY_NM, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨
                 position: new window.kakao.maps.LatLng(store.FCLTY_LA, store.FCLTY_LO), // 마커를 표시할 위치(위도, 경도)
                 clickable: true,
                 image: markerImage // 커스텀 마커 이미지 설정
             })
+
+            // 마커 클릭 이벤트
+            window.kakao.maps.event.addListener(marker, 'click', function() {
+                //TODO: 클릭한 마커의 위도, 경도 데이터를 어떻게 얻어 올 것인지?
+                // 정 안되면 서점 이름으로 find 돌려서 위도, 경도 가져올 수도 있음
+                const  moveLatLon = new window.kakao.maps.LatLng(33.450580, 126.574942);
+                // const markerOffset = new window.kakao.maps.Point(OFFSET_X, OFFSET_Y) // 기본, 클릭 마커의 기준좌표
+                // let options = {
+                //     center: new window.kakao.maps.LatLng(37.56839464, 126.9303023), // 지도의 중심 좌표
+                //     level: 10 // 지도의 확대 수준
+                // };
+                // var latlng = mouseEvent.latLng; 
+                // var latlng = marker.latLng; 
+                
+
+                // const  moveLatLon = new window.kakao.maps.LatLng(latlng.getLat(), latlng.getLng());
+
+    
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(moveLatLon);  
+                // console.log(marker)
+            });
         })
+
+        
 
     };
 
-    // 지도 이동하기
-    function panTo() {
-        // 이동할 위도 경도 위치를 생성합니다 
-        var moveLatLon = new window.kakao.maps.LatLng(33.450580, 126.574942);
+    
         
-        // 지도 중심을 부드럽게 이동시킵니다
-        // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-        // map.panTo(moveLatLon);            
-    }        
+  
+
+    // 지도 이동하기
+    // function panTo() {
+    //     // 이동할 위도 경도 위치를 생성합니다 
+    //     var moveLatLon = new window.kakao.maps.LatLng(33.450580, 126.574942);
+        
+    //     // 지도 중심을 부드럽게 이동시킵니다
+    //     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    //     // map.panTo(moveLatLon);            
+    // }        
 
     useEffect(()=> {
         handleMap();
