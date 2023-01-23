@@ -52,7 +52,7 @@ export default function InfoWrapper() {
               <span>영업중</span>
             </IconContainer>
           }
-          width="30%"
+          width="33%"
           margin="right"
         />
         <Filter
@@ -67,7 +67,7 @@ export default function InfoWrapper() {
               <span>영업종료</span>
             </IconContainer>
           }
-          width="30%"
+          width="33%"
         />
       </Filters>
     </Container>
@@ -75,7 +75,8 @@ export default function InfoWrapper() {
 }
 
 const Container = styled.div`
-  flex: 1 1 auto;
+  width: 30%;
+  min-width: 300px;
   padding: 10px;
 `;
 
