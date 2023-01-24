@@ -50,12 +50,21 @@ export const Filters = styled.div`
   margin-bottom: 1rem;
 `;
 
+interface FilterProps {
+  width?: string;
+  backgroundColor?: string;
+}
+
 export const Filter = styled.button`
-  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props: FilterProps) =>
+    props.backgroundColor || 'transparent'};
+  width: ${(props: FilterProps) => props.width};
   text-align: center;
-  width: ${(props: { width: string }) => props.width};
   border: 1px solid ${BLACK_COLOR};
-  outline: none;
   font-size: 1rem;
   padding: 0.5rem 0;
   cursor: pointer;
@@ -63,6 +72,12 @@ export const Filter = styled.button`
   &:last-child {
     margin-right: 0;
   }
+`;
+
+export const CategoryContainer = styled.div`
+  width: 60%;
+  margin-right: 1rem;
+  position: relative;
 `;
 
 export const Category = styled.button`

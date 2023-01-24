@@ -1,19 +1,33 @@
+import { Dispatch, SetStateAction } from 'react';
 import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import * as S from './Category.style';
+
+interface CategoryProps {
+  setOpenCategory: Dispatch<SetStateAction<boolean>>;
+  currentCategory: string;
+  setCurrentCategory: Dispatch<SetStateAction<string>>;
+}
 
 export default function Category({
   setOpenCategory,
   currentCategory,
   setCurrentCategory,
-}: any) {
+}: CategoryProps) {
+  const handleCategoryClick = (category: string) => {
+    if (currentCategory === category) {
+      setCurrentCategory('카테고리 선택');
+      setOpenCategory(false);
+      return;
+    }
+    setCurrentCategory(category);
+    setOpenCategory(false);
+  };
+
   return (
     <S.Container>
       {categories.map((category, idx) => (
         <S.Li
-          onClick={() => {
-            setCurrentCategory(category);
-            setOpenCategory(false);
-          }}
+          onClick={() => handleCategoryClick(category)}
           key={idx}
           color={currentCategory === category ? BLACK_COLOR : LIGHT_GRAY_COLOR}
         >

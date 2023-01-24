@@ -1,5 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { GREEN_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+import {
+  DARK_GRAY_COLOR,
+  GREEN_COLOR,
+  LIGHT_GRAY_COLOR,
+} from '../../../common/colors';
 
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
@@ -12,16 +16,32 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 
+enum openFilterEnum {
+  OPEN = 0,
+  CLOSE = 1,
+  ALL = 2,
+}
+
 export default function InfoWrapper() {
   const [search, setSearch] = useState<string>('');
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 선택');
   const [openCategory, setOpenCategory] = useState<boolean>(false);
+  const [parking, setParking] = useState<boolean>(false);
+  const [cafe, setCafe] = useState<boolean>(false);
+  const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(search);
     setSearch('');
+  };
+
+  const handleOpenStatusClick = (idx: number) => {
+    if (openFilter === idx) {
+      setOpenFilter(openFilterEnum.ALL);
+      return;
+    }
+    setOpenFilter(idx);
   };
 
   return (
@@ -39,25 +59,33 @@ export default function InfoWrapper() {
 
       {/* 필터 */}
       <S.Filters>
-        <div
-          style={{ width: '60%', marginRight: '1rem', position: 'relative' }}
-        >
+        {/* 카테고리 */}
+        <S.CategoryContainer>
           <S.Category onClick={() => setOpenCategory((prev) => !prev)}>
             {currentCategory}
           </S.Category>
           {openCategory && (
             <Category
-              openCategory={openCategory}
               setOpenCategory={setOpenCategory}
               currentCategory={currentCategory}
               setCurrentCategory={setCurrentCategory}
             />
           )}
-        </div>
-        <S.Filter width="20%">
+        </S.CategoryContainer>
+        {/* 주차 */}
+        <S.Filter
+          width="20%"
+          onClick={() => setParking((prev) => !prev)}
+          backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
           <FaParking />
         </S.Filter>
-        <S.Filter width="20%">
+        {/* 카페 */}
+        <S.Filter
+          width="20%"
+          onClick={() => setCafe((prev) => !prev)}
+          backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
           <IoCafeOutline />
         </S.Filter>
       </S.Filters>
@@ -65,16 +93,21 @@ export default function InfoWrapper() {
       {/* 영업 상태 */}
       <S.Filters>
         {openStatus.map(({ status, color }, idx) => (
-          <S.Filter width="33%" key={idx}>
-            <S.IconContainer>
-              <MdCircle
-                style={{
-                  color: color,
-                  marginRight: '0.2rem',
-                }}
-              />
-              <span>{status}</span>
-            </S.IconContainer>
+          <S.Filter
+            width="33%"
+            key={idx}
+            onClick={() => handleOpenStatusClick(idx)}
+            backgroundColor={
+              openFilter === idx ? LIGHT_GRAY_COLOR : 'transparent'
+            }
+          >
+            <MdCircle
+              style={{
+                color: color,
+                marginRight: '0.2rem',
+              }}
+            />
+            <span>{status}</span>
           </S.Filter>
         ))}
       </S.Filters>
@@ -106,6 +139,6 @@ const openStatus = [
   },
   {
     status: '영업종료',
-    color: LIGHT_GRAY_COLOR,
+    color: DARK_GRAY_COLOR,
   },
 ];
