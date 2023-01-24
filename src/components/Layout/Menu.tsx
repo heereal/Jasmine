@@ -6,13 +6,6 @@ interface MenuProps {
   label: string;
 }
 
-const style = {
-  color: BLACK_COLOR,
-  textDecoration: 'none',
-  marginRight: '20px',
-  padding: '0 4px 2px 4px',
-};
-
 export default function Menu({ to, label }: MenuProps) {
   return (
     <NavLink
@@ -30,3 +23,10 @@ export default function Menu({ to, label }: MenuProps) {
     </NavLink>
   );
 }
+
+const style = {
+  color: BLACK_COLOR,
+  textDecoration: 'none',
+  marginRight: '20px',
+  padding: '0 4px 2px 4px',
+};
