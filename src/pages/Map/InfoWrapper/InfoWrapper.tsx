@@ -13,18 +13,6 @@ import ResultItem from './ResultItem/ResultItem';
 import { data } from '../../../bookstore';
 import * as S from './InfoWrapper.style';
 
-// 영업 상태
-const openStatus = [
-  {
-    status: '영업중',
-    color: GREEN_COLOR,
-  },
-  {
-    status: '영업종료',
-    color: LIGHT_GRAY_COLOR,
-  },
-];
-
 export default function InfoWrapper() {
   const [search, setSearch] = React.useState<string>('');
 
@@ -94,6 +82,17 @@ export default function InfoWrapper() {
   );
 }
 
+// 영업 상태
+const openStatus = [
+  {
+    status: '영업중',
+    color: GREEN_COLOR,
+  },
+  {
+    status: '영업종료',
+    color: LIGHT_GRAY_COLOR,
+  },
+];
 interface FilterProps {
   component: React.ReactNode;
   width?: string;

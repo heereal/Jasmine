@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+import { PAGE_HEIGHT } from '../../../common/layout';
 
 export const Container = styled.div`
+  padding: 1rem;
+  height: ${PAGE_HEIGHT};
   width: 40%;
   min-width: 300px;
   max-width: 500px;
-  padding: 1rem;
   overflow-y: auto;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-y: hidden;
+  }
 `;
 
 export const SearchForm = styled.form`
