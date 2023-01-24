@@ -50,8 +50,23 @@ export const Filters = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const Filter = styled.button`
+  background-color: transparent;
+  text-align: center;
+  width: ${(props: { width: string }) => props.width};
+  border: 1px solid ${BLACK_COLOR};
+  outline: none;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  margin-right: 1rem;
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const Category = styled.button`
-  flex: 1 1 auto;
+  width: 100%;
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
   outline: none;

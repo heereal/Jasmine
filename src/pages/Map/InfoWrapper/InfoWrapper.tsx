@@ -1,22 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
-import {
-  BLACK_COLOR,
-  GREEN_COLOR,
-  LIGHT_GRAY_COLOR,
-} from '../../../common/colors';
+import { FormEvent, useState } from 'react';
+import { GREEN_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { BiCurrentLocation } from 'react-icons/bi';
-import ResultItem from './ResultItem/ResultItem';
+
 import { data } from '../../../bookstore';
+
 import * as S from './InfoWrapper.style';
+import ResultItem from './ResultItem/ResultItem';
+import Category from './Category/Category';
 
 export default function InfoWrapper() {
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = useState<string>('');
+  const [currentCategory, setCurrentCategory] =
+    useState<string>('카테고리 선택');
+  const [openCategory, setOpenCategory] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(search);
     setSearch('');
@@ -37,29 +39,43 @@ export default function InfoWrapper() {
 
       {/* 필터 */}
       <S.Filters>
-        <S.Category>카테고리 전체</S.Category>
-        <Filter component={<FaParking />} width="20%" margin="left" />
-        <Filter component={<IoCafeOutline />} width="20%" margin="left" />
+        <div
+          style={{ width: '60%', marginRight: '1rem', position: 'relative' }}
+        >
+          <S.Category onClick={() => setOpenCategory((prev) => !prev)}>
+            {currentCategory}
+          </S.Category>
+          {openCategory && (
+            <Category
+              openCategory={openCategory}
+              setOpenCategory={setOpenCategory}
+              currentCategory={currentCategory}
+              setCurrentCategory={setCurrentCategory}
+            />
+          )}
+        </div>
+        <S.Filter width="20%">
+          <FaParking />
+        </S.Filter>
+        <S.Filter width="20%">
+          <IoCafeOutline />
+        </S.Filter>
       </S.Filters>
 
       {/* 영업 상태 */}
       <S.Filters>
-        {openStatus.map(({ status, color }) => (
-          <Filter
-            component={
-              <S.IconContainer>
-                <MdCircle
-                  style={{
-                    color: color,
-                    marginRight: '0.2rem',
-                  }}
-                />
-                <span>{status}</span>
-              </S.IconContainer>
-            }
-            width="33%"
-            margin="right"
-          />
+        {openStatus.map(({ status, color }, idx) => (
+          <S.Filter width="33%" key={idx}>
+            <S.IconContainer>
+              <MdCircle
+                style={{
+                  color: color,
+                  marginRight: '0.2rem',
+                }}
+              />
+              <span>{status}</span>
+            </S.IconContainer>
+          </S.Filter>
         ))}
       </S.Filters>
 
@@ -73,8 +89,8 @@ export default function InfoWrapper() {
       <S.SearchResultContainer>
         <S.Summary>총 300건의 검색결과</S.Summary>
         <S.ResultItemContainer>
-          {data.slice(0, 20).map((item) => {
-            return <ResultItem info={item} />;
+          {data.slice(0, 20).map((item, idx) => {
+            return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
       </S.SearchResultContainer>
@@ -93,25 +109,3 @@ const openStatus = [
     color: LIGHT_GRAY_COLOR,
   },
 ];
-interface FilterProps {
-  component: React.ReactNode;
-  width?: string;
-  margin?: string;
-}
-
-function Filter({ component, width, margin }: FilterProps) {
-  const Wrapper = styled.button`
-    background-color: transparent;
-    text-align: center;
-    width: ${width};
-    border: 1px solid ${BLACK_COLOR};
-    outline: none;
-    font-size: 1rem;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    ${margin === 'left' && 'margin-left: 1rem;'}
-    ${margin === 'right' && 'margin-right: 1rem;'}
-  `;
-
-  return <Wrapper>{component}</Wrapper>;
-}
