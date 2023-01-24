@@ -8,6 +8,22 @@ import {
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
+import { BiCurrentLocation } from 'react-icons/bi';
+import ResultItem from './ResultItem/ResultItem';
+import { data } from '../../../bookstore';
+import * as S from './InfoWrapper.style';
+
+// 영업 상태
+const openStatus = [
+  {
+    status: '영업중',
+    color: GREEN_COLOR,
+  },
+  {
+    status: '영업종료',
+    color: LIGHT_GRAY_COLOR,
+  },
+];
 
 export default function InfoWrapper() {
   const [search, setSearch] = React.useState<string>('');
@@ -19,116 +35,64 @@ export default function InfoWrapper() {
   };
 
   return (
-    <Container>
+    <S.Container>
       {/* 검색 */}
-      <SearchForm onSubmit={handleSubmit}>
-        <SearchInput
+      <S.SearchForm onSubmit={handleSubmit}>
+        <S.SearchInput
           type="text"
           placeholder="서점을 찾아보세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <SearchButton type="submit" value="검색" />
-      </SearchForm>
+        <S.SearchButton type="submit" value="검색" />
+      </S.SearchForm>
 
       {/* 필터 */}
-      <Filters>
-        <Category>카테고리 전체</Category>
-        <Filter component={<FaParking />} width="25%" margin="left" />
-        <Filter component={<IoCafeOutline />} width="25%" margin="left" />
-      </Filters>
+      <S.Filters>
+        <S.Category>카테고리 전체</S.Category>
+        <Filter component={<FaParking />} width="20%" margin="left" />
+        <Filter component={<IoCafeOutline />} width="20%" margin="left" />
+      </S.Filters>
 
       {/* 영업 상태 */}
-      <Filters>
-        <Filter
-          component={
-            <IconContainer>
-              <MdCircle
-                style={{
-                  color: GREEN_COLOR,
-                  marginRight: '0.2rem',
-                }}
-              />
-              <span>영업중</span>
-            </IconContainer>
-          }
-          width="33%"
-          margin="right"
-        />
-        <Filter
-          component={
-            <IconContainer>
-              <MdCircle
-                style={{
-                  color: LIGHT_GRAY_COLOR,
-                  marginRight: '0.2rem',
-                }}
-              />
-              <span>영업종료</span>
-            </IconContainer>
-          }
-          width="33%"
-        />
-      </Filters>
-    </Container>
+      <S.Filters>
+        {openStatus.map(({ status, color }) => (
+          <Filter
+            component={
+              <S.IconContainer>
+                <MdCircle
+                  style={{
+                    color: color,
+                    marginRight: '0.2rem',
+                  }}
+                />
+                <span>{status}</span>
+              </S.IconContainer>
+            }
+            width="33%"
+            margin="right"
+          />
+        ))}
+      </S.Filters>
+
+      {/* 내 위치로 검색하기 */}
+      <S.SearchCurrentLocation>
+        <BiCurrentLocation />
+        <span>내 위치로 검색하기</span>
+      </S.SearchCurrentLocation>
+
+      {/* 검색 결과 */}
+      <S.SearchResultContainer>
+        <S.Summary>총 300건의 검색결과</S.Summary>
+        <S.ResultItemContainer>
+          {data.slice(0, 20).map((item) => {
+            return <ResultItem info={item} />;
+          })}
+        </S.ResultItemContainer>
+      </S.SearchResultContainer>
+    </S.Container>
   );
 }
-
-const Container = styled.div`
-  width: 30%;
-  min-width: 300px;
-  padding: 10px;
-`;
-
-const SearchForm = styled.form`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 1rem;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  border: 1px solid ${BLACK_COLOR};
-  outline: none;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-`;
-
-const SearchButton = styled.input`
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  background-color: transparent;
-  position: absolute;
-  right: 0;
-  padding-right: 1rem;
-`;
-
-const Filters = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 1rem;
-`;
-
-const Category = styled.button`
-  text-align: center;
-  width: 50%;
-  border: 1px solid ${BLACK_COLOR};
-  outline: none;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
 
 interface FilterProps {
   component: React.ReactNode;
@@ -145,6 +109,7 @@ function Filter({ component, width, margin }: FilterProps) {
     outline: none;
     font-size: 1rem;
     padding: 0.5rem 0;
+    cursor: pointer;
     ${margin === 'left' && 'margin-left: 1rem;'}
     ${margin === 'right' && 'margin-right: 1rem;'}
   `;

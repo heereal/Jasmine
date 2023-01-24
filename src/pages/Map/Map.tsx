@@ -1,17 +1,12 @@
-import styled from 'styled-components';
 import InfoWrapper from './InfoWrapper/InfoWrapper';
 import MapWrapper from './MapWrapper/MapWrapper';
+import * as S from './Map.style';
 
 export default function Map() {
   return (
-    <Container>
+    <S.Container>
       <InfoWrapper />
       <MapWrapper />
-    </Container>
+    </S.Container>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
