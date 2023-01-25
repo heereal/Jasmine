@@ -12,6 +12,7 @@ export const Container = styled.div`
 export const Logo = styled.img`
   width: 150px;
   margin-right: 50px;
+  cursor: pointer;
 `;
 
 export const Menus = styled.ul`
