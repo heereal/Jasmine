@@ -16,6 +16,8 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 
+import Fuse from 'fuse.js';
+
 // 영업 상태 enum
 enum openFilterEnum {
   OPEN = 0,
@@ -55,6 +57,16 @@ export default function InfoWrapper() {
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const options = {
+      includeScore: true,
+      threshold: 0.3,
+      keys: ['FCLTY_NM'],
+    };
+
+    const fuse = new Fuse(data, options);
+
+    const result = fuse.search(search);
+    console.log(result);
     setSearch('');
   };
 
@@ -151,7 +163,10 @@ export default function InfoWrapper() {
         <S.ResultItemContainer>
           {/* TODO: 검색결과 일정 개수만 보여주기 + 무한스크롤 */}
           {/* TODO: 검색결과 없을 때 예외처리 */}
-          {data.slice(0, 20).map((item, idx) => {
+          {/* {data.slice(0, 20).map((item, idx) => {
+            return <ResultItem info={item} key={idx} />;
+          })} */}
+          {data.map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
