@@ -1,6 +1,7 @@
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import * as S from './ResultItem.style';
 
@@ -31,14 +32,17 @@ interface ResultItemProps {
 
 export default function ResultItem({ info }: ResultItemProps) {
   const {
+    ESNTL_ID: id,
     FCLTY_NM: name,
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
   } = info;
 
+  const navigate = useNavigate();
+
   return (
-    <S.Container>
+    <S.Container onClick={() => navigate(`/map/${id}`)}>
       <S.NameRow>
         <S.IconsContainer>
           <MdCircle
