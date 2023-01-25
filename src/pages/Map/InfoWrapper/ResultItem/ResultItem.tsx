@@ -2,8 +2,10 @@ import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import * as S from './ResultItem.style';
+import { bookstorePositionState } from '../../../../store/selectors';
 
 interface ResultItemProps {
   info: {
@@ -37,12 +39,23 @@ export default function ResultItem({ info }: ResultItemProps) {
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
+    FCLTY_LA: lat,
+    FCLTY_LO: lng
   } = info;
 
   const navigate = useNavigate();
 
+  // FIXME: useSetRecoilState로 수정?
+  const [position, setPosition] = useRecoilState(bookstorePositionState);
+
+  // FIXME: 왜 lat, lng type number가 안 먹지?
+  const hadleClickBookstore = (lat: any, lng: any): void => {
+    navigate(`/map/${id}`);
+    setPosition({lat, lng})
+  };
+
   return (
-    <S.Container onClick={() => navigate(`/map/${id}`)}>
+    <S.Container onClick={() => hadleClickBookstore(lat, lng)}>
       <S.NameRow>
         <S.IconsContainer>
           <MdCircle
