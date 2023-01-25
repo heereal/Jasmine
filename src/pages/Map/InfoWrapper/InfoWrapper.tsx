@@ -54,6 +54,10 @@ export default function InfoWrapper() {
   // 영업 상태
   const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
 
+  // 검색결과 데이터 끝 여부
+  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
+  const [countOfData, setCountOfData] = useState<number>(10);
+
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,6 +83,16 @@ export default function InfoWrapper() {
     }
     // 다른 버튼 클릭 시 해당 버튼으로 변경
     setOpenFilter(idx);
+  };
+
+  // 더보기 버튼 클릭 핸들링 함수
+  const handleLoadMoreButtonClick = () => {
+    if (countOfData + 10 >= data.length) {
+      setCountOfData(data.length);
+      setIsEndOfData(true);
+      return;
+    }
+    setCountOfData(countOfData + 10);
   };
 
   return (
@@ -159,17 +173,19 @@ export default function InfoWrapper() {
 
       {/* 검색 결과 */}
       <S.SearchResultContainer>
-        <S.Summary>총 300건의 검색결과</S.Summary>
+        <S.Summary>총 {data.length}건의 검색결과</S.Summary>
         <S.ResultItemContainer>
-          {/* TODO: 검색결과 일정 개수만 보여주기 + 무한스크롤 */}
           {/* TODO: 검색결과 없을 때 예외처리 */}
-          {/* {data.slice(0, 20).map((item, idx) => {
-            return <ResultItem info={item} key={idx} />;
-          })} */}
-          {data.map((item, idx) => {
+          {data.slice(0, countOfData).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
+        {/* 더보기 버튼 */}
+        {isEndOfData || (
+          <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
+            더보기
+          </S.LoadMoreButton>
+        )}
       </S.SearchResultContainer>
     </S.Container>
   );

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+import {
+  BLACK_COLOR,
+  LIGHT_GRAY_COLOR,
+  PINK_COLOR,
+} from '../../../common/colors';
 import { PAGE_HEIGHT } from '../../../common/layout';
 
 export const Container = styled.div`
@@ -107,9 +111,12 @@ export const SearchCurrentLocation = styled.button`
   border: none;
   outline: none;
   font-size: 1rem;
-  padding: 0.5rem 0 1.5rem 0;
-  margin: auto;
+  margin: 0.5rem auto 1.5rem auto;
   cursor: pointer;
+  transition: 80ms ease-in-out;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
 
 export const SearchResultContainer = styled.div`
@@ -130,4 +137,21 @@ export const Summary = styled.div`
 
 export const ResultItemContainer = styled.div`
   width: 100%;
+  margin-bottom: 2rem;
+`;
+
+export const LoadMoreButton = styled.button`
+  height: 2rem;
+  border: none;
+  border-bottom: 1px solid ${BLACK_COLOR};
+  background-color: transparent;
+  color: ${BLACK_COLOR};
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+  transition: 80ms ease-in-out;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
