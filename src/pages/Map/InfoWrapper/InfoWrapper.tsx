@@ -1,17 +1,27 @@
-import React from 'react';
-import styled from 'styled-components';
+import { FormEvent, useState } from 'react';
 import {
-  BLACK_COLOR,
+  DARK_GRAY_COLOR,
   GREEN_COLOR,
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
+
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { BiCurrentLocation } from 'react-icons/bi';
-import ResultItem from './ResultItem/ResultItem';
+
 import { data } from '../../../bookstore';
+
 import * as S from './InfoWrapper.style';
+import ResultItem from './ResultItem/ResultItem';
+import Category from './Category/Category';
+
+// 영업 상태 enum
+enum openFilterEnum {
+  OPEN = 0,
+  CLOSE = 1,
+  ALL = 2,
+}
 
 // 영업 상태
 const openStatus = [
@@ -21,17 +31,56 @@ const openStatus = [
   },
   {
     status: '영업종료',
-    color: LIGHT_GRAY_COLOR,
+    color: DARK_GRAY_COLOR,
   },
 ];
 
 export default function InfoWrapper() {
-  const [search, setSearch] = React.useState<string>('');
+  // 검색어
+  const [search, setSearch] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // 현재 카테고리
+  const [currentCategory, setCurrentCategory] =
+    useState<string>('카테고리 선택');
+  // 카테고리 드롭다운 상태
+  const [openCategory, setOpenCategory] = useState<boolean>(false);
+
+  // 주차, 카페
+  const [parking, setParking] = useState<boolean>(false);
+  const [cafe, setCafe] = useState<boolean>(false);
+
+  // 영업 상태
+  const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
+
+  // 검색결과 데이터 끝 여부
+  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
+  const [countOfData, setCountOfData] = useState<number>(10);
+
+  // 검색 form 제출 핸들링 함수
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(search);
     setSearch('');
+  };
+
+  // 영업 상태 클릭 핸들링 함수
+  const handleOpenStatusClick = (idx: number) => {
+    // 같은 버튼 클릭 시 전체로 변경
+    if (openFilter === idx) {
+      setOpenFilter(openFilterEnum.ALL);
+      return;
+    }
+    // 다른 버튼 클릭 시 해당 버튼으로 변경
+    setOpenFilter(idx);
+  };
+
+  // 더보기 버튼 클릭 핸들링 함수
+  const handleLoadMoreButtonClick = () => {
+    if (countOfData + 10 >= data.length) {
+      setCountOfData(data.length);
+      setIsEndOfData(true);
+      return;
+    }
+    setCountOfData(countOfData + 10);
   };
 
   return (
@@ -49,70 +98,83 @@ export default function InfoWrapper() {
 
       {/* 필터 */}
       <S.Filters>
-        <S.Category>카테고리 전체</S.Category>
-        <Filter component={<FaParking />} width="20%" margin="left" />
-        <Filter component={<IoCafeOutline />} width="20%" margin="left" />
+        {/* 카테고리 */}
+        <S.CategoryContainer>
+          {/* 카테고리 선택 */}
+          <S.Category onClick={() => setOpenCategory(!openCategory)}>
+            {currentCategory}
+          </S.Category>
+          {openCategory && (
+            // 드롭다운 메뉴
+            <Category
+              setOpenCategory={setOpenCategory}
+              currentCategory={currentCategory}
+              setCurrentCategory={setCurrentCategory}
+            />
+          )}
+        </S.CategoryContainer>
+        {/* 주차 */}
+        <S.Filter
+          width="20%"
+          onClick={() => setParking(!parking)}
+          backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
+          <FaParking />
+        </S.Filter>
+        {/* 카페 */}
+        <S.Filter
+          width="20%"
+          onClick={() => setCafe(!cafe)}
+          backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
+          <IoCafeOutline />
+        </S.Filter>
       </S.Filters>
 
       {/* 영업 상태 */}
       <S.Filters>
-        {openStatus.map(({ status, color }) => (
-          <Filter
-            component={
-              <S.IconContainer>
-                <MdCircle
-                  style={{
-                    color: color,
-                    marginRight: '0.2rem',
-                  }}
-                />
-                <span>{status}</span>
-              </S.IconContainer>
-            }
+        {openStatus.map(({ status, color }, idx) => (
+          <S.Filter
             width="33%"
-            margin="right"
-          />
+            key={idx}
+            onClick={() => handleOpenStatusClick(idx)}
+            backgroundColor={
+              openFilter === idx ? LIGHT_GRAY_COLOR : 'transparent'
+            }
+          >
+            <MdCircle
+              style={{
+                color: color,
+                marginRight: '0.2rem',
+              }}
+            />
+            <span>{status}</span>
+          </S.Filter>
         ))}
       </S.Filters>
 
       {/* 내 위치로 검색하기 */}
       <S.SearchCurrentLocation>
-        <BiCurrentLocation />
+        <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
 
       {/* 검색 결과 */}
       <S.SearchResultContainer>
-        <S.Summary>총 300건의 검색결과</S.Summary>
+        <S.Summary>총 {data.length}건의 검색결과</S.Summary>
         <S.ResultItemContainer>
-          {data.slice(0, 20).map((item) => {
-            return <ResultItem info={item} />;
+          {/* TODO: 검색결과 없을 때 예외처리 */}
+          {data.slice(0, countOfData).map((item, idx) => {
+            return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
+        {/* 더보기 버튼 */}
+        {isEndOfData || (
+          <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
+            더보기
+          </S.LoadMoreButton>
+        )}
       </S.SearchResultContainer>
     </S.Container>
   );
-}
-
-interface FilterProps {
-  component: React.ReactNode;
-  width?: string;
-  margin?: string;
-}
-
-function Filter({ component, width, margin }: FilterProps) {
-  const Wrapper = styled.button`
-    background-color: transparent;
-    text-align: center;
-    width: ${width};
-    border: 1px solid ${BLACK_COLOR};
-    outline: none;
-    font-size: 1rem;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    ${margin === 'left' && 'margin-left: 1rem;'}
-    ${margin === 'right' && 'margin-right: 1rem;'}
-  `;
-
-  return <Wrapper>{component}</Wrapper>;
 }

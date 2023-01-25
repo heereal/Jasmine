@@ -1,12 +1,25 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+import {
+  BLACK_COLOR,
+  LIGHT_GRAY_COLOR,
+  PINK_COLOR,
+} from '../../../common/colors';
+import { PAGE_HEIGHT } from '../../../common/layout';
 
 export const Container = styled.div`
+  font-family: 'Pretendard-Regular';
+  padding: 1rem;
+  height: ${PAGE_HEIGHT};
   width: 40%;
   min-width: 300px;
   max-width: 500px;
-  padding: 1rem;
   overflow-y: auto;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-y: hidden;
+  }
 `;
 
 export const SearchForm = styled.form`
@@ -42,8 +55,38 @@ export const Filters = styled.div`
   margin-bottom: 1rem;
 `;
 
+interface FilterProps {
+  width?: string;
+  backgroundColor?: string;
+}
+
+export const Filter = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props: FilterProps) =>
+    props.backgroundColor || 'transparent'};
+  width: ${(props: FilterProps) => props.width};
+  text-align: center;
+  border: 1px solid ${BLACK_COLOR};
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  margin-right: 1rem;
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
+export const CategoryContainer = styled.div`
+  width: 60%;
+  margin-right: 1rem;
+  position: relative;
+`;
+
 export const Category = styled.button`
-  flex: 1 1 auto;
+  width: 100%;
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
   outline: none;
@@ -68,9 +111,12 @@ export const SearchCurrentLocation = styled.button`
   border: none;
   outline: none;
   font-size: 1rem;
-  padding: 0.5rem 0 1.5rem 0;
-  margin: auto;
+  margin: 0.5rem auto 1.5rem auto;
   cursor: pointer;
+  transition: 80ms ease-in-out;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
 
 export const SearchResultContainer = styled.div`
@@ -91,4 +137,21 @@ export const Summary = styled.div`
 
 export const ResultItemContainer = styled.div`
   width: 100%;
+  margin-bottom: 2rem;
+`;
+
+export const LoadMoreButton = styled.button`
+  height: 2rem;
+  border: none;
+  border-bottom: 1px solid ${BLACK_COLOR};
+  background-color: transparent;
+  color: ${BLACK_COLOR};
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+  transition: 80ms ease-in-out;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;

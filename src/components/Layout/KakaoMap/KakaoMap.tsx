@@ -1,8 +1,5 @@
-import styled from 'styled-components';
-import { LIGHT_GRAY_COLOR } from '../../../common/colors';
-import { PAGE_HEIGHT } from '../../../common/layout';
 import { useEffect, useRef } from 'react';
-import { data } from '../../../bookstore';
+import data from '../../../bookstore.json';
 
 const { kakao } = window;
 
@@ -13,7 +10,7 @@ declare global {
   }
 }
 
-export default function MapWrapper() {
+export default function KaokaoMap() {
   // 지도가 표시될 HTML element
   const container = useRef(null);
 
@@ -33,7 +30,8 @@ export default function MapWrapper() {
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     // 마커 이미지 생성
-    const imageSrc = 'images/marker.png';
+    const imageSrc =
+      'https://user-images.githubusercontent.com/117061017/213868546-c26efb7b-3288-436c-a937-a10780b34cfb.png';
     const imageSize = new kakao.maps.Size(28, 28);
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
@@ -68,18 +66,5 @@ export default function MapWrapper() {
     handleMap();
   }, []);
 
-  return <S.Container ref={container} />;
+  return <div ref={container} style={{ width: 500, height: 500 }}></div>;
 }
-
-const S = {
-  Container: styled.div`
-    font-family: 'Pretendard-Regular';
-    flex: 1 1 auto;
-    background-color: ${LIGHT_GRAY_COLOR};
-    height: ${PAGE_HEIGHT}px;
-    @media screen and (max-width: 768px) {
-      width: 100%;
-      height: 500px;
-    }
-  `,
-};
