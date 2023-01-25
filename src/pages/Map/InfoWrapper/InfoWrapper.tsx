@@ -16,31 +16,56 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 
+// 영업 상태 enum
 enum openFilterEnum {
   OPEN = 0,
   CLOSE = 1,
   ALL = 2,
 }
 
+// 영업 상태
+const openStatus = [
+  {
+    status: '영업중',
+    color: GREEN_COLOR,
+  },
+  {
+    status: '영업종료',
+    color: DARK_GRAY_COLOR,
+  },
+];
+
 export default function InfoWrapper() {
+  // 검색어
   const [search, setSearch] = useState<string>('');
+
+  // 현재 카테고리
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 선택');
+  // 카테고리 드롭다운 상태
   const [openCategory, setOpenCategory] = useState<boolean>(false);
+
+  // 주차, 카페
   const [parking, setParking] = useState<boolean>(false);
   const [cafe, setCafe] = useState<boolean>(false);
+
+  // 영업 상태
   const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
 
+  // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearch('');
   };
 
+  // 영업 상태 클릭 핸들링 함수
   const handleOpenStatusClick = (idx: number) => {
+    // 같은 버튼 클릭 시 전체로 변경
     if (openFilter === idx) {
       setOpenFilter(openFilterEnum.ALL);
       return;
     }
+    // 다른 버튼 클릭 시 해당 버튼으로 변경
     setOpenFilter(idx);
   };
 
@@ -61,10 +86,12 @@ export default function InfoWrapper() {
       <S.Filters>
         {/* 카테고리 */}
         <S.CategoryContainer>
-          <S.Category onClick={() => setOpenCategory((prev) => !prev)}>
+          {/* 카테고리 선택 */}
+          <S.Category onClick={() => setOpenCategory(!openCategory)}>
             {currentCategory}
           </S.Category>
           {openCategory && (
+            // 드롭다운 메뉴
             <Category
               setOpenCategory={setOpenCategory}
               currentCategory={currentCategory}
@@ -75,7 +102,7 @@ export default function InfoWrapper() {
         {/* 주차 */}
         <S.Filter
           width="20%"
-          onClick={() => setParking((prev) => !prev)}
+          onClick={() => setParking(!parking)}
           backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <FaParking />
@@ -83,7 +110,7 @@ export default function InfoWrapper() {
         {/* 카페 */}
         <S.Filter
           width="20%"
-          onClick={() => setCafe((prev) => !prev)}
+          onClick={() => setCafe(!cafe)}
           backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <IoCafeOutline />
@@ -114,7 +141,7 @@ export default function InfoWrapper() {
 
       {/* 내 위치로 검색하기 */}
       <S.SearchCurrentLocation>
-        <BiCurrentLocation />
+        <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
 
@@ -122,6 +149,8 @@ export default function InfoWrapper() {
       <S.SearchResultContainer>
         <S.Summary>총 300건의 검색결과</S.Summary>
         <S.ResultItemContainer>
+          {/* TODO: 검색결과 일정 개수만 보여주기 + 무한스크롤 */}
+          {/* TODO: 검색결과 없을 때 예외처리 */}
           {data.slice(0, 20).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
@@ -130,15 +159,3 @@ export default function InfoWrapper() {
     </S.Container>
   );
 }
-
-// 영업 상태
-const openStatus = [
-  {
-    status: '영업중',
-    color: GREEN_COLOR,
-  },
-  {
-    status: '영업종료',
-    color: DARK_GRAY_COLOR,
-  },
-];
