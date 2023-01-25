@@ -151,10 +151,12 @@ export default function InfoWrapper() {
         <S.ResultItemContainer>
           {/* TODO: 검색결과 일정 개수만 보여주기 + 무한스크롤 */}
           {/* TODO: 검색결과 없을 때 예외처리 */}
-          {data.slice(0, 20).map((item, idx) => {
+          {data.slice(0, 10).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
+        {/* 더보기 버튼 */}
+        <S.LoadMoreButton>더보기</S.LoadMoreButton>
       </S.SearchResultContainer>
     </S.Container>
   );
