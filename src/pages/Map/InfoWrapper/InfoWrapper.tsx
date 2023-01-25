@@ -11,6 +11,7 @@ import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { BiCurrentLocation } from 'react-icons/bi';
+import { BiX } from 'react-icons/bi';
 
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
@@ -18,7 +19,7 @@ import Category from './Category/Category';
 
 import Fuse from 'fuse.js';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { dbState } from '../../../store/selectors';
 import { IdbState } from '../../../store/selectors';
 
@@ -49,7 +50,7 @@ export default function InfoWrapper() {
   const [search, setSearch] = useState<string>('');
 
   // 검색 기능 on/off
-  const [isSearchOn, SetIsSearchOn] = useState<boolean>(false);
+  const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
 
   // 현재 카테고리
   const [currentCategory, setCurrentCategory] =
@@ -71,7 +72,7 @@ export default function InfoWrapper() {
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    SetIsSearchOn(true);
+    setIsSearchOn(true);
     const options = {
       threshold: 0.3,
       keys: ['FCLTY_NM'],
@@ -103,6 +104,11 @@ export default function InfoWrapper() {
     setCountOfData(countOfData + 10);
   };
 
+  const handleIsSearchOnState = () => {
+    setDB(data);
+    setIsSearchOn(false);
+  };
+
   return (
     <S.Container>
       {/* 검색 */}
@@ -113,6 +119,9 @@ export default function InfoWrapper() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <S.ResetButton onClick={handleIsSearchOnState}>
+          <BiX />
+        </S.ResetButton>
         <S.SearchButton type="submit" value="검색" />
       </S.SearchForm>
 
