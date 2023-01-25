@@ -1,4 +1,5 @@
 import * as S from './introduceNewBookstore.styles';
+// 안녕하세요.
 
 export default function IntroduceNewBookstore() {
   return (
