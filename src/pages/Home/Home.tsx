@@ -29,30 +29,19 @@ export default function Home() {
 }
 
 const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   height: 100%;
+  width: 100%;
 `;
 const MainImageLocation = styled.div`
+  height: 100%;
   width: 100%;
-  height: 800px;
 `;
 const BackGroundImage = styled.img`
-  width: 100%;
   height: 100%;
-  position: absolute;
-  z-index: 0;
+  width: 100%;
 `;
 
-const MoveToFindBookstore = styled.div`
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+const MoveToFindBookstore = styled.div``;
 const BTNMoveToFindBookstore = styled.button`
   width: 300px;
   height: 80px;
