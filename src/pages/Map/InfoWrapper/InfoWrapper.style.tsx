@@ -3,6 +3,7 @@ import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
 import { PAGE_HEIGHT } from '../../../common/layout';
 
 export const Container = styled.div`
+  font-family: 'Pretendard-Regular';
   padding: 1rem;
   height: ${PAGE_HEIGHT};
   width: 40%;
