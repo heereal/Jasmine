@@ -8,6 +8,7 @@ export default function MapWrapper() {
 
 const S = {
   Container: styled.div`
+    font-family: 'Pretendard-Regular';
     flex: 1 1 auto;
     background-color: ${LIGHT_GRAY_COLOR};
     height: ${PAGE_HEIGHT}px;
