@@ -22,7 +22,7 @@ export const NameRow = styled.div`
 export const Name = styled.span`
   height: 0.8rem;
   margin-right: 0.5rem;
-  transition: 80ms ease-out;
+  transition: 80ms ease-in-out;
   &:hover {
     color: ${PINK_COLOR};
   }

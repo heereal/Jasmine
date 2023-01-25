@@ -111,9 +111,12 @@ export const SearchCurrentLocation = styled.button`
   border: none;
   outline: none;
   font-size: 1rem;
-  padding: 0.5rem 0 1.5rem 0;
-  margin: auto;
+  margin: 0.5rem auto 1.5rem auto;
   cursor: pointer;
+  transition: 80ms ease-in-out;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
 
 export const SearchResultContainer = styled.div`
@@ -147,7 +150,7 @@ export const LoadMoreButton = styled.button`
   cursor: pointer;
   padding: 0 0.5rem;
   margin-bottom: 1rem;
-  transition: 80ms ease-out;
+  transition: 80ms ease-in-out;
   &:hover {
     color: ${PINK_COLOR};
   }
