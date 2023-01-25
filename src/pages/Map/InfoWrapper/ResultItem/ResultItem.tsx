@@ -2,7 +2,6 @@ import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import * as S from './ResultItem.style';
 
