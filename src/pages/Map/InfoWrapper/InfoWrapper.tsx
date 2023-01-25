@@ -41,6 +41,12 @@ export default function InfoWrapper() {
   // 검색어
   const [search, setSearch] = useState<string>('');
 
+  // 검색 결과
+  const [searchResult, setSearchResult] = useState<any>();
+
+  // 검색 기능 on/off
+  const [isSearchOn, SetIsSearchOn] = useState<boolean>(false);
+
   // 현재 카테고리
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 선택');
@@ -61,8 +67,9 @@ export default function InfoWrapper() {
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    SetIsSearchOn(true);
+
     const options = {
-      includeScore: true,
       threshold: 0.3,
       keys: ['FCLTY_NM'],
     };
@@ -70,8 +77,9 @@ export default function InfoWrapper() {
     const fuse = new Fuse(data, options);
 
     const result = fuse.search(search);
+    setSearchResult(result);
     console.log(result);
-    setSearch('');
+    // setSearch('');
   };
 
   // 영업 상태 클릭 핸들링 함수
@@ -172,21 +180,42 @@ export default function InfoWrapper() {
       </S.SearchCurrentLocation>
 
       {/* 검색 결과 */}
-      <S.SearchResultContainer>
-        <S.Summary>총 {data.length}건의 검색결과</S.Summary>
-        <S.ResultItemContainer>
-          {/* TODO: 검색결과 없을 때 예외처리 */}
-          {data.slice(0, countOfData).map((item, idx) => {
-            return <ResultItem info={item} key={idx} />;
-          })}
-        </S.ResultItemContainer>
-        {/* 더보기 버튼 */}
-        {isEndOfData || (
-          <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
-            더보기
-          </S.LoadMoreButton>
-        )}
-      </S.SearchResultContainer>
+      {isSearchOn === false ? (
+        // 전체 결과
+        <S.SearchResultContainer>
+          <S.Summary>총 {data.length}건의 검색결과</S.Summary>
+          <S.ResultItemContainer>
+            {/* TODO: 검색결과 없을 때 예외처리 */}
+            {data.slice(0, countOfData).map((item, idx) => {
+              return <ResultItem info={item} key={idx} />;
+            })}
+          </S.ResultItemContainer>
+          {/* 더보기 버튼 */}
+          {isEndOfData || (
+            <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
+              더보기
+            </S.LoadMoreButton>
+          )}
+        </S.SearchResultContainer>
+      ) : (
+        // 검색어 입력 시 결과
+        <S.SearchResultContainer>
+          <S.Summary>총 {searchResult.length}건의 검색결과</S.Summary>
+          <S.ResultItemContainer>
+            {/* TODO: 검색결과 없을 때 예외처리 */}
+            {searchResult.map(({ item }: any, idx: any) => {
+              return <ResultItem info={item} key={idx} />;
+            })}
+          </S.ResultItemContainer>
+
+          {/* 더보기 버튼 */}
+          {isEndOfData || (
+            <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
+              더보기
+            </S.LoadMoreButton>
+          )}
+        </S.SearchResultContainer>
+      )}
     </S.Container>
   );
 }
