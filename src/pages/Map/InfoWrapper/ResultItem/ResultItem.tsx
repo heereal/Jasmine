@@ -4,7 +4,7 @@ import { MdCircle } from 'react-icons/md';
 import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import * as S from './ResultItem.style';
 
-interface ResultItemProps {
+export interface ResultItemProps {
   info: {
     ESNTL_ID: number | string;
     FCLTY_NM: number | string;

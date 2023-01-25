@@ -5,18 +5,22 @@ import {
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
 
+import { data } from '../../../bookstore';
+
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { BiCurrentLocation } from 'react-icons/bi';
-
-import { data } from '../../../bookstore';
 
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 
 import Fuse from 'fuse.js';
+
+import { useRecoilState } from 'recoil';
+import { dbState } from '../../../store/selectors';
+import { IdbState } from '../../../store/selectors';
 
 // 영업 상태 enum
 enum openFilterEnum {
@@ -38,11 +42,11 @@ const openStatus = [
 ];
 
 export default function InfoWrapper() {
+  // db 전역 상태
+  const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+
   // 검색어
   const [search, setSearch] = useState<string>('');
-
-  // 검색 결과
-  const [searchResult, setSearchResult] = useState<any>();
 
   // 검색 기능 on/off
   const [isSearchOn, SetIsSearchOn] = useState<boolean>(false);
@@ -68,18 +72,14 @@ export default function InfoWrapper() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     SetIsSearchOn(true);
-
     const options = {
       threshold: 0.3,
       keys: ['FCLTY_NM'],
     };
-
     const fuse = new Fuse(data, options);
-
-    const result = fuse.search(search);
-    setSearchResult(result);
-    console.log(result);
-    // setSearch('');
+    const result: any = fuse.search(search);
+    setDB(result);
+    setSearch('');
   };
 
   // 영업 상태 클릭 핸들링 함수
@@ -95,8 +95,8 @@ export default function InfoWrapper() {
 
   // 더보기 버튼 클릭 핸들링 함수
   const handleLoadMoreButtonClick = () => {
-    if (countOfData + 10 >= data.length) {
-      setCountOfData(data.length);
+    if (countOfData + 10 >= DB.length) {
+      setCountOfData(DB.length);
       setIsEndOfData(true);
       return;
     }
@@ -183,10 +183,10 @@ export default function InfoWrapper() {
       {isSearchOn === false ? (
         // 전체 결과
         <S.SearchResultContainer>
-          <S.Summary>총 {data.length}건의 검색결과</S.Summary>
+          <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
           <S.ResultItemContainer>
             {/* TODO: 검색결과 없을 때 예외처리 */}
-            {data.slice(0, countOfData).map((item, idx) => {
+            {DB.slice(0, countOfData).map((item, idx) => {
               return <ResultItem info={item} key={idx} />;
             })}
           </S.ResultItemContainer>
@@ -200,10 +200,10 @@ export default function InfoWrapper() {
       ) : (
         // 검색어 입력 시 결과
         <S.SearchResultContainer>
-          <S.Summary>총 {searchResult.length}건의 검색결과</S.Summary>
+          <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
           <S.ResultItemContainer>
             {/* TODO: 검색결과 없을 때 예외처리 */}
-            {searchResult.map(({ item }: any, idx: any) => {
+            {DB.slice(0, countOfData).map(({ item }: any, idx: any) => {
               return <ResultItem info={item} key={idx} />;
             })}
           </S.ResultItemContainer>
