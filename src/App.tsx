@@ -1,9 +1,12 @@
-import Router from "./shared/Router";
+import { RecoilRoot } from 'recoil';
+import Router from './shared/Router';
 
-function App () {
+function App() {
   return (
+    <RecoilRoot>
       <Router />
+    </RecoilRoot>
   );
-};
+}
 
-export default App; 
+export default App;
