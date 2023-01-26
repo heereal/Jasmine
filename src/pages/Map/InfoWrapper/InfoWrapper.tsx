@@ -99,6 +99,7 @@ export default function InfoWrapper({ map }: any) {
   // 검색 결과 초기화 핸들링 함수
   const handleResetResult = () => {
     setDB(data);
+    setCurrentCategory('카테고리 선택');
   };
 
   return (
