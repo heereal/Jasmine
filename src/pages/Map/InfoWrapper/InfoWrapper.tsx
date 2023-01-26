@@ -19,7 +19,7 @@ import Category from './Category/Category';
 
 import Fuse from 'fuse.js';
 
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { dbState } from '../../../store/selectors';
 import { IdbState } from '../../../store/selectors';
 
@@ -79,6 +79,8 @@ export default function InfoWrapper() {
     };
     const fuse = new Fuse(data, options);
     const result: any = fuse.search(search);
+    console.log('검색 결과', result);
+    
     setDB(result);
     setSearch('');
   };

@@ -3,6 +3,9 @@ import { LIGHT_GRAY_COLOR } from '../../../common/colors';
 import { PAGE_HEIGHT } from '../../../common/layout';
 import { useEffect, useRef } from 'react';
 import { data } from '../../../bookstore';
+import { useRecoilState } from 'recoil';
+import { dbState } from '../../../store/selectors';
+import { IdbState } from '../../../store/selectors';
 
 const { kakao } = window;
 
@@ -14,6 +17,11 @@ declare global {
 }
 
 export default function MapWrapper() {
+  // 전역 DB
+  const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+  console.log(DB);
+  
+
   // 지도가 표시될 HTML element
   const container = useRef(null);
 
@@ -38,7 +46,9 @@ export default function MapWrapper() {
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
     // 마커 표시하기
-    data.forEach((store) => {
+    DB.forEach((store) => {
+      console.log('store', store);
+      
       const marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         title: store.FCLTY_NM, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨
@@ -66,7 +76,7 @@ export default function MapWrapper() {
 
   useEffect(() => {
     handleMap();
-  }, []);
+  }, [DB]);
 
   return <S.Container ref={container} />;
 }
