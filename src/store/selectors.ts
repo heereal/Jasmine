@@ -33,6 +33,12 @@ export const currentLocationState: any = atom({
   },
 });
 
+// FIXME: kakao.maps.Map으로 지도 생성하기-실패...
+export const kakaoMap = atom({
+  key: 'kakaoMap',
+  default: {},
+});
+
 export const dbState: any = atom<IdbState[]>({
   key: 'dbState',
   default: data,
