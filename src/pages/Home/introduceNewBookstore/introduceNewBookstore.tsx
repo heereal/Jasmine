@@ -13,23 +13,35 @@ export default function IntroduceNewBookstore() {
         </S.H1IntroduceNewBookStore>
         <S.WrapperCardsIntroduceNewBookStore>
           <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore>헬로인디</S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore src="images/mainimage.png" alt="" />
+            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
+            <S.IMGIntroduceNewBookStore
+              src={require('../../../assets/images/mainimage.png')}
+              alt=""
+            />
           </S.CardIntroductNewBookStore>
 
           <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore>헬로인디</S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore src="images/mainimage.png" alt="" />
+            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
+            <S.IMGIntroduceNewBookStore
+              src={require('../../../assets/images/mainimage.png')}
+              alt=""
+            />
           </S.CardIntroductNewBookStore>
 
           <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore>헬로인디</S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore src="images/mainimage.png" alt="" />
+            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
+            <S.IMGIntroduceNewBookStore
+              src={require('../../../assets/images/mainimage.png')}
+              alt=""
+            />
           </S.CardIntroductNewBookStore>
 
           <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore>헬로인디</S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore src="images/mainimage.png" alt="" />
+            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
+            <S.IMGIntroduceNewBookStore
+              src={require('../../../assets/images/mainimage.png')}
+              alt=""
+            />
           </S.CardIntroductNewBookStore>
         </S.WrapperCardsIntroduceNewBookStore>
       </S.SectorIntroduceNewBookStore>

@@ -1,20 +1,27 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import {
   DARK_GRAY_COLOR,
   GREEN_COLOR,
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
 
+import { data } from '../../../bookstore';
+
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { BiCurrentLocation } from 'react-icons/bi';
-
-import { data } from '../../../bookstore';
+import { BiX } from 'react-icons/bi';
 
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
+import { useRecoilState } from 'recoil';
+import { currentLocationState } from '../../../store/selectors';
+import useGeolocation from '../../../hooks/useGeolocation';
+
+import { dbState } from '../../../store/selectors';
+import { IdbState } from '../../../store/selectors';
 
 // 영업 상태 enum
 enum openFilterEnum {
@@ -36,12 +43,26 @@ const openStatus = [
 ];
 
 export default function InfoWrapper() {
+  // 현재 위치 가져오기
+  const location = useGeolocation();
+  const [, setCurrentLocation] = useRecoilState(currentLocationState);
+
+  // 페이지 로드 시 현재 위치 저장
+  useEffect(() => {
+    if (!location) return;
+    setCurrentLocation(location);
+  }, [location, setCurrentLocation]);
+
+  // db 전역 상태
+  const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+
   // 검색어
   const [search, setSearch] = useState<string>('');
 
   // 현재 카테고리
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 선택');
+
   // 카테고리 드롭다운 상태
   const [openCategory, setOpenCategory] = useState<boolean>(false);
 
@@ -59,6 +80,10 @@ export default function InfoWrapper() {
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    let result = data.filter((item) => item.FCLTY_NM.includes(search));
+
+    setDB(result);
     setSearch('');
   };
 
@@ -75,12 +100,24 @@ export default function InfoWrapper() {
 
   // 더보기 버튼 클릭 핸들링 함수
   const handleLoadMoreButtonClick = () => {
-    if (countOfData + 10 >= data.length) {
-      setCountOfData(data.length);
+    if (countOfData + 10 >= DB.length) {
+      setCountOfData(DB.length);
       setIsEndOfData(true);
       return;
     }
     setCountOfData(countOfData + 10);
+  };
+
+  // 내 위치로 검색하기 버튼 클릭 핸들링 함수
+  const handleSearchCurrentLocationClick = () => {
+    if (!location) return;
+    setCurrentLocation(location);
+    console.log(location);
+  };
+
+  // 검색 결과 초기화 핸들링 함수
+  const handleResetResult = () => {
+    setDB(data);
   };
 
   return (
@@ -93,9 +130,11 @@ export default function InfoWrapper() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <S.ResetButton onClick={handleResetResult}>
+          <BiX />
+        </S.ResetButton>
         <S.SearchButton type="submit" value="검색" />
       </S.SearchForm>
-
       {/* 필터 */}
       <S.Filters>
         {/* 카테고리 */}
@@ -130,7 +169,6 @@ export default function InfoWrapper() {
           <IoCafeOutline />
         </S.Filter>
       </S.Filters>
-
       {/* 영업 상태 */}
       <S.Filters>
         {openStatus.map(({ status, color }, idx) => (
@@ -152,19 +190,18 @@ export default function InfoWrapper() {
           </S.Filter>
         ))}
       </S.Filters>
-
       {/* 내 위치로 검색하기 */}
-      <S.SearchCurrentLocation>
+      <S.SearchCurrentLocation onClick={handleSearchCurrentLocationClick}>
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
 
-      {/* 검색 결과 */}
+      {/* 전체 결과 */}
       <S.SearchResultContainer>
-        <S.Summary>총 {data.length}건의 검색결과</S.Summary>
+        <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
         <S.ResultItemContainer>
           {/* TODO: 검색결과 없을 때 예외처리 */}
-          {data.slice(0, countOfData).map((item, idx) => {
+          {DB.slice(0, countOfData).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
