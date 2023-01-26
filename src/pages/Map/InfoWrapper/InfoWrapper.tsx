@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import {
   DARK_GRAY_COLOR,
   GREEN_COLOR,
@@ -16,8 +16,10 @@ import { BiX } from 'react-icons/bi';
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
-
 import { useRecoilState } from 'recoil';
+import { currentLocationState } from '../../../store/selectors';
+import useGeolocation from '../../../hooks/useGeolocation';
+
 import { dbState } from '../../../store/selectors';
 import { IdbState } from '../../../store/selectors';
 
@@ -41,6 +43,16 @@ const openStatus = [
 ];
 
 export default function InfoWrapper({ map }: any) {
+  // 현재 위치 가져오기
+  const location = useGeolocation();
+  const [, setCurrentLocation] = useRecoilState(currentLocationState);
+
+  // 페이지 로드 시 현재 위치 저장
+  useEffect(() => {
+    if (!location) return;
+    setCurrentLocation(location);
+  }, [location, setCurrentLocation]);
+
   // db 전역 상태
   const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
 
@@ -94,6 +106,13 @@ export default function InfoWrapper({ map }: any) {
       return;
     }
     setCountOfData(countOfData + 10);
+  };
+
+  // 내 위치로 검색하기 버튼 클릭 핸들링 함수
+  const handleSearchCurrentLocationClick = () => {
+    if (!location) return;
+    setCurrentLocation(location);
+    console.log(location);
   };
 
   // 검색 결과 초기화 핸들링 함수
@@ -172,7 +191,7 @@ export default function InfoWrapper({ map }: any) {
         ))}
       </S.Filters>
       {/* 내 위치로 검색하기 */}
-      <S.SearchCurrentLocation>
+      <S.SearchCurrentLocation onClick={handleSearchCurrentLocationClick}>
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>

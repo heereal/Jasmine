@@ -43,7 +43,7 @@ export default function Map() {
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     // 마커 이미지 생성
-    const imageSrc = 'images/marker.png';
+    const imageSrc = require('../../assets/images/marker.png');
     const imageSize = new kakao.maps.Size(28, 28);
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
