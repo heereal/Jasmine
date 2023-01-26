@@ -100,6 +100,9 @@ export default function InfoWrapper({ map }: any) {
   const handleResetResult = () => {
     setDB(data);
     setCurrentCategory('카테고리 선택');
+    setCafe(false);
+    setParking(false);
+    setOpenFilter(2);
   };
 
   return (
