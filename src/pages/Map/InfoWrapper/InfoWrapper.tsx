@@ -77,24 +77,34 @@ export default function InfoWrapper() {
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
   const [countOfData, setCountOfData] = useState<number>(10);
 
-  // 검색 form 제출 핸들링 함수
+  //! 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      !search &&
-      currentCategory === '카테고리 선택' &&
-      !parking &&
-      !cafe &&
-      openFilter === 2
-    ) {
-      console.log('전체 데이터 출력');
-    }
-
+    // 검색 결과 필터
     let result = data.filter((item) => item.FCLTY_NM.includes(search));
 
+    // 검색어, 카테고리, 주차, 카페, 영업 상태 필터
+
+    if (currentCategory !== '카테고리 선택') {
+      result = result.filter((item) => item.MLSFC_NM.includes(currentCategory));
+    }
+
+    if (parking) {
+      result = result.filter((item) => item.ADIT_DC.includes('주차'));
+    }
+
+    if (cafe) {
+      result = result.filter((item) => item.ADIT_DC.includes('카페'));
+    }
+
+    // if (openFilter === openFilterEnum.OPEN) {
+    //   // result = result.filter((item) => item.BIZCOND_NM.includes('영업중'));
+    // } else if (openFilter === openFilterEnum.CLOSE) {
+    //   // result = result.filter((item) => item.BIZCOND_NM.includes('영업종료'));
+    // }
+
     setDB(result);
-    setSearch('');
   };
 
   // 영업 상태 클릭 핸들링 함수
@@ -176,7 +186,7 @@ export default function InfoWrapper() {
         {/* 주차 */}
         <S.Filter
           width="20%"
-          onClick={handleFilterParking}
+          onClick={() => setParking(!parking)}
           backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <FaParking />
