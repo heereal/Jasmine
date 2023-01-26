@@ -1,6 +1,6 @@
 import * as S from './Home.styles';
 import IntroduceNewBookstore from './introduceNewBookstore/introduceNewBookstore';
-import SubscribeOurLetter from './SubscribeOurLetter/SubscribeOurLetter';
+import SubscribeOurLetter from './SubscribeOurLetter/SubscribeOutLetter';
 
 export default function Home() {
   return (
