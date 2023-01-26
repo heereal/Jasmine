@@ -7,7 +7,11 @@ export default function Header() {
 
   return (
     <S.Container>
-      <S.Logo src="images/logo.png" alt="" onClick={() => navigation('/')} />
+      <S.Logo
+        src={require('../../assets/images/logo.png')}
+        alt=""
+        onClick={() => navigation('/')}
+      />
       <S.Menus>
         <Menu to="/" label="홈" />
         <Menu to="/map" label="서점찾기" />

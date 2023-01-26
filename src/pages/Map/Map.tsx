@@ -1,11 +1,12 @@
-import InfoWrapper from './InfoWrapper/InfoWrapper';
-import styled from 'styled-components';
-import { PAGE_HEIGHT } from '../../common/layout';
 import { useEffect, useRef, useState } from 'react';
-import { LIGHT_GRAY_COLOR } from '../../common/colors';
 import { useRecoilValue } from 'recoil';
-import { dbState } from '../../store/selectors';
-import { IdbState } from '../../store/selectors';
+import { useParams } from 'react-router-dom';
+
+import { dbState, IdbState } from '../../store/selectors';
+
+import * as S from './Map.style';
+
+import InfoWrapper from './InfoWrapper/InfoWrapper';
 
 const { kakao } = window;
 
@@ -17,6 +18,8 @@ declare global {
 }
 
 export default function Map() {
+  const { bookstoreId } = useParams();
+
   // 전역 DB 불러오기
   const DB = useRecoilValue<IdbState[]>(dbState);
 
@@ -24,7 +27,7 @@ export default function Map() {
   const mapContainer = useRef(null);
 
   // map을 자식 컴포넌트에 props로  넘김
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState<any>(null);
 
   // 카카오 지도 생성하기, 마커 표시하기
   const handleMap = () => {
@@ -43,7 +46,7 @@ export default function Map() {
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     // 마커 이미지 생성
-    const imageSrc = 'images/marker.png';
+    const imageSrc = require('../../assets/images/marker.png');
     const imageSize = new kakao.maps.Size(28, 28);
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
@@ -78,33 +81,27 @@ export default function Map() {
     handleMap();
   }, [DB]);
 
+  // 라우터 파라미터로 받은 bookstoreId 값에 따라 지도 이동
+  useEffect(() => {
+    if (!map) return;
+
+    DB.find((store) => {
+      if (store.ESNTL_ID === bookstoreId) {
+        const moveLatLon = new kakao.maps.LatLng(
+          store.FCLTY_LA,
+          store.FCLTY_LO,
+        );
+        map.panTo(moveLatLon);
+      }
+
+      return store.FCLTY_NM === bookstoreId;
+    });
+  }, [map, bookstoreId, DB]);
+
   return (
     <S.Container>
-      <InfoWrapper map={map} />
+      <InfoWrapper />
       <S.MapContainer ref={mapContainer} />
     </S.Container>
   );
 }
-
-const S = {
-  Container: styled.div`
-    display: flex;
-    flex-direction: row;
-    height: ${PAGE_HEIGHT}px;
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-      height: inherit;
-      overflow-y: auto;
-    }
-  `,
-  MapContainer: styled.div`
-    font-family: 'Pretendard-Regular';
-    flex: 1 1 auto;
-    background-color: ${LIGHT_GRAY_COLOR};
-    height: ${PAGE_HEIGHT}px;
-    @media screen and (max-width: 768px) {
-      width: 100%;
-      height: 500px;
-    }
-  `,
-};
