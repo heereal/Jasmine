@@ -98,13 +98,10 @@ export default function InfoWrapper() {
       result = result.filter((item) => item.ADIT_DC.includes('카페'));
     }
 
-    // if (openFilter === openFilterEnum.OPEN) {
-    //   // result = result.filter((item) => item.BIZCOND_NM.includes('영업중'));
-    // } else if (openFilter === openFilterEnum.CLOSE) {
-    //   // result = result.filter((item) => item.BIZCOND_NM.includes('영업종료'));
-    // }
+    // 영업 중 / 영업 종료 추가
 
     setDB(result);
+    setSearch('');
   };
 
   // 영업 상태 클릭 핸들링 함수
@@ -144,20 +141,13 @@ export default function InfoWrapper() {
     setOpenFilter(2);
   };
 
-  const handleFilterParking = () => {
-    setParking(!parking);
-    let result = data.filter((item) => item.ADIT_DC.includes('주차'));
-
-    setDB(result);
-  };
-
   return (
     <S.Container>
       {/* 검색 */}
       <S.SearchForm onSubmit={handleSubmit}>
         <S.SearchInput
           type="text"
-          placeholder="서점을 찾아보세요."
+          placeholder="서점을 찾아보세요"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

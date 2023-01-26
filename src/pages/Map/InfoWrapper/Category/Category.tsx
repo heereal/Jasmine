@@ -4,8 +4,8 @@ import { categories } from '../../../../common/data';
 import * as S from './Category.style';
 import { useRecoilState } from 'recoil';
 import { dbState } from '../../../../store/selectors';
-import { data } from '../../../../bookstore';
 import { IdbState } from '../../../../store/selectors';
+import InfoWrapper from '../InfoWrapper';
 
 interface CategoryProps {
   setOpenCategory: Dispatch<SetStateAction<boolean>>;
@@ -18,6 +18,9 @@ export default function Category({
   currentCategory,
   setCurrentCategory,
 }: CategoryProps) {
+  //
+
+
   // 전역 DB
   const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
 

@@ -26,7 +26,7 @@ export interface ResultItemProps {
     RSTDE_GUID_CN: number | string;
     TEL_NO: number | string;
     OPTN_DC: number | string;
-    ADIT_DC: number | string;
+    ADIT_DC: string;
   };
 }
 
@@ -57,9 +57,14 @@ export default function ResultItem({ info }: ResultItemProps) {
               marginRight: '0.5rem',
             }}
           />
+          {/* 가져다가 붙이세요 */}
           <S.Name>{name}</S.Name>
-          <FaParking style={{ marginRight: '0.2rem' }} />
-          <IoCafeOutline />
+          {info.ADIT_DC.includes('주차') ? (
+            <FaParking style={{ marginRight: '0.2rem' }} />
+          ) : (
+            <></>
+          )}
+          {info.ADIT_DC.includes('카페') ? <IoCafeOutline /> : <></>}
         </S.IconsContainer>
         <S.Category>{category}</S.Category>
       </S.NameRow>

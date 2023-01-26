@@ -21,7 +21,7 @@ export interface IdbState {
   RSTDE_GUID_CN: number | string;
   TEL_NO: number | string;
   OPTN_DC: number | string;
-  ADIT_DC: number | string;
+  ADIT_DC: string;
 }
 
 // 현재 위치를 저장하는 Recoil 상태
