@@ -81,6 +81,16 @@ export default function InfoWrapper() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (
+      !search &&
+      currentCategory === '카테고리 선택' &&
+      !parking &&
+      !cafe &&
+      openFilter === 2
+    ) {
+      console.log('전체 데이터 출력');
+    }
+
     let result = data.filter((item) => item.FCLTY_NM.includes(search));
 
     setDB(result);
