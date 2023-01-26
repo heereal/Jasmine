@@ -6,7 +6,10 @@ export default function Home() {
   return (
     <S.HomeContainer>
       <S.MainImageLocation>
-        <S.BackGroundImage src="images/mainimage.png" alt="" />
+        <S.BackGroundImage
+          src={require('../../assets/images/mainimage.png')}
+          alt=""
+        />
       </S.MainImageLocation>
 
       {/* NEW : 따끈따끈 신규 서점  */}
