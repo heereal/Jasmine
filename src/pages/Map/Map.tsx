@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
-import { dbState, IdbState } from '../../store/selectors';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { dbState, IdbState, markerState } from '../../store/selectors';
 
 import * as S from './Map.style';
 
@@ -33,6 +33,8 @@ export default function Map() {
 
   // map 객체를 저장할 state
   const [map, setMap] = useState<any>(null);
+  // markers 배열을 저장할 state
+  const [markers, setMarkers] = useRecoilState(markerState);
 
   // 현재 클릭한 bookstroreId를 저장할 state
   const [selectedStoreId, setSelectedStoreId] = useState<any>(null);
@@ -67,6 +69,9 @@ export default function Map() {
         image: markerImage, // 커스텀 마커 이미지 설정
         id: store.ESNTL_ID, // 마커에 ESNTL_ID를 id로 설정
       });
+
+      // 마커를 markers 배열에 저장
+      setMarkers((markers: any) => [...markers, marker]);
 
       // 마커 클릭 이벤트
       kakao.maps.event.addListener(marker, 'click', () =>
@@ -124,7 +129,7 @@ export default function Map() {
 
   return (
     <S.Container>
-      <InfoWrapper />
+      <InfoWrapper map={map} />
       <S.MapContainer ref={mapContainer} />
     </S.Container>
   );

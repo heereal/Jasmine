@@ -44,3 +44,8 @@ export const dbState: any = atom<IdbState[]>({
   key: 'dbState',
   default: data,
 });
+
+export const markerState: any = atom({
+  key: 'markerState',
+  default: [],
+});

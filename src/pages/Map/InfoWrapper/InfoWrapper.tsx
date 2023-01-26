@@ -1,5 +1,6 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import {
+  BLUE_COLOR,
   DARK_GRAY_COLOR,
   GREEN_COLOR,
   LIGHT_GRAY_COLOR,
@@ -16,12 +17,11 @@ import { BiX } from 'react-icons/bi';
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
-import { useRecoilState } from 'recoil';
-import { currentLocationState } from '../../../store/selectors';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { currentLocationState, markerState } from '../../../store/selectors';
 import useGeolocation from '../../../hooks/useGeolocation';
 
-import { dbState } from '../../../store/selectors';
-import { IdbState } from '../../../store/selectors';
+import { dbState, IdbState } from '../../../store/selectors';
 
 // 영업 상태 enum
 enum openFilterEnum {
@@ -42,10 +42,11 @@ const openStatus = [
   },
 ];
 
-export default function InfoWrapper() {
+export default function InfoWrapper({ map }: any) {
   // 현재 위치 가져오기
   const location = useGeolocation();
-  const [, setCurrentLocation] = useRecoilState(currentLocationState);
+  const setCurrentLocation = useSetRecoilState(currentLocationState);
+  const [currentCircle, setCurrentCircle] = useState<any>(null);
 
   // 페이지 로드 시 현재 위치 저장
   useEffect(() => {
@@ -55,6 +56,8 @@ export default function InfoWrapper() {
 
   // db 전역 상태
   const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+  // markers 배열을 저장할 state
+  const [markers, setMarkers] = useRecoilState(markerState);
 
   // 검색어
   const [search, setSearch] = useState<string>('');
@@ -88,37 +91,83 @@ export default function InfoWrapper() {
   };
 
   // 영업 상태 클릭 핸들링 함수
-  const handleOpenStatusClick = (idx: number) => {
-    // 같은 버튼 클릭 시 전체로 변경
-    if (openFilter === idx) {
-      setOpenFilter(openFilterEnum.ALL);
-      return;
-    }
-    // 다른 버튼 클릭 시 해당 버튼으로 변경
-    setOpenFilter(idx);
-  };
+  const handleOpenStatusClick = useCallback(
+    (idx: number) => {
+      // 같은 버튼 클릭 시 전체로 변경
+      if (openFilter === idx) {
+        setOpenFilter(openFilterEnum.ALL);
+        return;
+      }
+      // 다른 버튼 클릭 시 해당 버튼으로 변경
+      setOpenFilter(idx);
+    },
+    [openFilter],
+  );
 
   // 더보기 버튼 클릭 핸들링 함수
-  const handleLoadMoreButtonClick = () => {
+  const handleLoadMoreButtonClick = useCallback(() => {
     if (countOfData + 10 >= DB.length) {
       setCountOfData(DB.length);
       setIsEndOfData(true);
       return;
     }
     setCountOfData(countOfData + 10);
-  };
-
-  // 내 위치로 검색하기 버튼 클릭 핸들링 함수
-  const handleSearchCurrentLocationClick = () => {
-    if (!location) return;
-    setCurrentLocation(location);
-    console.log(location);
-  };
+  }, [countOfData, DB.length]);
 
   // 검색 결과 초기화 핸들링 함수
-  const handleResetResult = () => {
+  const handleResetResult = useCallback(() => {
     setDB(data);
-  };
+    setCurrentCategory('카테고리 선택');
+    setCafe(false);
+    setParking(false);
+    setOpenFilter(2);
+  }, [setDB, setCurrentCategory, setCafe, setParking, setOpenFilter]);
+
+  // 내 위치로 검색하기 버튼 클릭 핸들링 함수
+  const handleSearchCurrentLocationClick = useCallback(() => {
+    // 필터 초기화
+    handleResetResult();
+
+    // 현재 위치가 없을 경우 return
+    if (!location || !map) return;
+
+    // 현재 위치로 지도 이동
+    map.setLevel(8);
+    map.panTo(
+      new window.kakao.maps.LatLng(
+        location.coordinates?.lat,
+        location.coordinates?.lng,
+      ),
+    );
+
+    // 이전 반경 표시 삭제
+    currentCircle && currentCircle.setMap(null);
+
+    // 현재 위치 반경 5km 표시
+    const circle = new window.kakao.maps.Circle({
+      center: new window.kakao.maps.LatLng(
+        location.coordinates?.lat,
+        location.coordinates?.lng,
+      ),
+      radius: 5000,
+      strokeWeight: 1,
+      strokeColor: BLUE_COLOR,
+      strokeOpacity: 0.8,
+      fillColor: BLUE_COLOR,
+      fillOpacity: 0.2,
+    });
+    circle.setMap(map);
+
+    // 현재 위치 반경 표시 저장
+    setCurrentCircle(circle);
+
+    console.log(map.getCenter());
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    }
+    
+
+  }, [location, map, handleResetResult, currentCircle]);
 
   return (
     <S.Container>
