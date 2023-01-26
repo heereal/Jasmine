@@ -73,6 +73,7 @@ export default function Map() {
         navigate(`/map/${store.ESNTL_ID}`),
       );
     });
+    //eslint-disable-next-line
   }, [DB]);
 
   useEffect(() => {
@@ -118,6 +119,7 @@ export default function Map() {
         setSelectedStoreId(overlay);
       }
     });
+    //eslint-disable-next-line
   }, [bookstoreId, map, DB]);
 
   return (
