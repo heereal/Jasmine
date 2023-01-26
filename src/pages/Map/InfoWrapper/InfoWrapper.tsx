@@ -35,7 +35,7 @@ const openStatus = [
   },
 ];
 
-export default function InfoWrapper() {
+export default function InfoWrapper({ map }: any) {
   // 검색어
   const [search, setSearch] = useState<string>('');
 
@@ -165,7 +165,7 @@ export default function InfoWrapper() {
         <S.ResultItemContainer>
           {/* TODO: 검색결과 없을 때 예외처리 */}
           {data.slice(0, countOfData).map((item, idx) => {
-            return <ResultItem info={item} key={idx} />;
+            return <ResultItem map={map} info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
         {/* 더보기 버튼 */}
