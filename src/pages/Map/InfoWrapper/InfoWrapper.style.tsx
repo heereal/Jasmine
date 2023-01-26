@@ -49,6 +49,15 @@ export const SearchButton = styled.input`
   padding-right: 1rem;
 `;
 
+export const ResetButton = styled.div`
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  padding-right: 1rem;
+  margin-right: 30px;
+  cursor: pointer;
+`;
+
 export const Filters = styled.div`
   display: flex;
   flex-direction: row;

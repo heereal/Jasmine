@@ -39,6 +39,8 @@ export default function MapWrapper() {
 
     // 마커 표시하기
     data.forEach((store) => {
+      console.log('store', store);
+
       const marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         title: store.FCLTY_NM, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨
