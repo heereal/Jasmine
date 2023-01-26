@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { dbState, IdbState, markerState } from '../../store/selectors';
+import { useRecoilValue } from 'recoil';
+import { dbState, IdbState } from '../../store/selectors';
 
 import * as S from './Map.style';
 
@@ -27,20 +27,20 @@ export default function Map() {
 
   // 전역 DB 불러오기
   const DB = useRecoilValue<IdbState[]>(dbState);
+  const [markers, setMarkers] = useState<any[]>([]);
 
   // 지도가 표시될 HTML element
   const mapContainer = useRef(null);
 
   // map 객체를 저장할 state
   const [map, setMap] = useState<any>(null);
-  // markers 배열을 저장할 state
-  const [markers, setMarkers] = useRecoilState(markerState);
+  const [markerImage, setMarkerImage] = useState<any>(null);
 
   // 현재 클릭한 bookstroreId를 저장할 state
-  const [selectedStoreId, setSelectedStoreId] = useState<any>(null);
+  const [currentOverlayStoreId, setCurrentOverlayStoreId] = useState<any>(null);
 
-  // 카카오 지도 생성하기, 마커 표시하기
-  const handleMap = useCallback(() => {
+  // * 지도를 생성하는 함수
+  const makeMap = useCallback(() => {
     // 지도를 생성할 때 필요한 기본 옵션
     let options = {
       center: new kakao.maps.LatLng(37.56839464, 126.9303023), // 지도의 중심 좌표
@@ -48,19 +48,33 @@ export default function Map() {
     };
 
     // 지도를 표시할 div와 지도 옵션으로 지도를 생성함
-    const map = new kakao.maps.Map(mapContainer.current, options);
-    setMap(map);
+    const newMap = new kakao.maps.Map(mapContainer.current, options);
+    console.log('지도 생성');
 
     // 지도 확대 축소를 제어할 수 있는 줌 컨트롤 생성
     const zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    newMap.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     // 마커 이미지 생성
     const imageSrc = require('../../assets/images/marker.png');
     const imageSize = new kakao.maps.Size(28, 28);
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+    setMarkerImage(new kakao.maps.MarkerImage(imageSrc, imageSize));
+
+    setMap(newMap);
+  }, []);
+
+  // * 마커를 생성하는 함수
+  const makeMarkers = useCallback(() => {
+    if (!markerImage) return;
+    console.log('마커 생성');
+
+    // 기존 마커 제거
+    if (markers.length > 0) {
+      markers.forEach((marker: any) => marker.setMap(null));
+    }
 
     // 마커 표시하기
+    const newMarkers: any[] = [];
     DB.forEach((store) => {
       const marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
@@ -70,34 +84,40 @@ export default function Map() {
         id: store.ESNTL_ID, // 마커에 ESNTL_ID를 id로 설정
       });
 
-      // 마커를 markers 배열에 저장
-      setMarkers((markers: any) => [...markers, marker]);
-
-      // 마커 클릭 이벤트
+      // 마커 클릭시 해당 bookstoreId로 라우터 이동
       kakao.maps.event.addListener(marker, 'click', () =>
         navigate(`/map/${store.ESNTL_ID}`),
       );
+
+      // 마커를 배열에 저장
+      newMarkers.push(marker);
     });
-    //eslint-disable-next-line
-  }, [DB]);
 
+    // 마커 배열을 state에 저장
+    setMarkers(newMarkers);
+
+    // eslint-disable-next-line
+  }, [DB, map, markerImage]);
+
+  // * 첫 렌더링 시 지도 생성
   useEffect(() => {
-    handleMap();
-  }, [DB, handleMap]);
+    makeMap();
+  }, [makeMap]);
 
-  // 라우터 파라미터로 받은 bookstoreId 값에 따라 지도 이동
+  // * DB가 변경되면 마커 생성
+  useEffect(() => {
+    makeMarkers();
+    // console.log('DB 변경');
+  }, [DB, makeMarkers, markerImage]);
+
+  // * 라우터 파라미터로 받은 bookstoreId 값에 따라 지도 이동
   useEffect(() => {
     // 지도가 생성되지 않았으면 함수 종료
     if (!map) return;
-    // bookstoreId가 없으면 지도 중심 좌표를 서울로 이동
-    if (!bookstoreId) {
-      map.panTo(new kakao.maps.LatLng(37.56839464, 126.9303023));
-      map.setLevel(10);
-    }
 
     // 이전에 클릭한 마커가 있으면 지도에서 제거
-    const prevStore = selectedStoreId;
-    prevStore && prevStore.setMap(null);
+    const prevOverlay = currentOverlayStoreId;
+    prevOverlay && prevOverlay.setMap(null);
 
     // bookstoreId에 해당하는 마커로 지도 이동
     DB.forEach((store) => {
@@ -121,7 +141,7 @@ export default function Map() {
           yAnchor: 0.5,
         });
 
-        setSelectedStoreId(overlay);
+        setCurrentOverlayStoreId(overlay);
       }
     });
     //eslint-disable-next-line
