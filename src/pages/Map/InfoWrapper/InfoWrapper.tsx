@@ -42,7 +42,7 @@ const openStatus = [
   },
 ];
 
-export default function InfoWrapper({ map }: any) {
+export default function InfoWrapper() {
   // 현재 위치 가져오기
   const location = useGeolocation();
   const [, setCurrentLocation] = useRecoilState(currentLocationState);
@@ -202,7 +202,7 @@ export default function InfoWrapper({ map }: any) {
         <S.ResultItemContainer>
           {/* TODO: 검색결과 없을 때 예외처리 */}
           {DB.slice(0, countOfData).map((item, idx) => {
-            return <ResultItem map={map} info={item} key={idx} />;
+            return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
         {/* 더보기 버튼 */}
