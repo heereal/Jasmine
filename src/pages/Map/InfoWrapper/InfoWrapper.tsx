@@ -105,6 +105,13 @@ export default function InfoWrapper({ map }: any) {
     setOpenFilter(2);
   };
 
+  const handleFilterParking = () => {
+    setParking(!parking)
+    let result = data.filter((item) => item.ADIT_DC.includes('주차'));
+
+    setDB(result);
+  }
+
   return (
     <S.Container>
       {/* 검색 */}
@@ -140,7 +147,7 @@ export default function InfoWrapper({ map }: any) {
         {/* 주차 */}
         <S.Filter
           width="20%"
-          onClick={() => setParking(!parking)}
+          onClick={handleFilterParking}
           backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <FaParking />
