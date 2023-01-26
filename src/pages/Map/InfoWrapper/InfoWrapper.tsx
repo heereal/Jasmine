@@ -17,8 +17,6 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 
-import Fuse from 'fuse.js';
-
 import { useRecoilState } from 'recoil';
 import { dbState } from '../../../store/selectors';
 import { IdbState } from '../../../store/selectors';
@@ -49,12 +47,10 @@ export default function InfoWrapper({ map }: any) {
   // 검색어
   const [search, setSearch] = useState<string>('');
 
-  // 검색 기능 on/off
-  const [isSearchOn, setIsSearchOn] = useState<boolean>(false);
-
   // 현재 카테고리
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 선택');
+
   // 카테고리 드롭다운 상태
   const [openCategory, setOpenCategory] = useState<boolean>(false);
 
@@ -72,15 +68,9 @@ export default function InfoWrapper({ map }: any) {
   // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSearchOn(true);
-    const options = {
-      threshold: 0.3,
-      keys: ['FCLTY_NM'],
-    };
-    const fuse = new Fuse(data, options);
-    const result: any = fuse.search(search);
-    console.log('검색 결과', result);
-    
+
+    let result = data.filter((item) => item.FCLTY_NM.includes(search));
+
     setDB(result);
     setSearch('');
   };
@@ -106,9 +96,9 @@ export default function InfoWrapper({ map }: any) {
     setCountOfData(countOfData + 10);
   };
 
-  const handleIsSearchOnState = () => {
+  // 검색 결과 초기화 핸들링 함수
+  const handleResetResult = () => {
     setDB(data);
-    setIsSearchOn(false);
   };
 
   return (
@@ -121,12 +111,11 @@ export default function InfoWrapper({ map }: any) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <S.ResetButton onClick={handleIsSearchOnState}>
+        <S.ResetButton onClick={handleResetResult}>
           <BiX />
         </S.ResetButton>
         <S.SearchButton type="submit" value="검색" />
       </S.SearchForm>
-
       {/* 필터 */}
       <S.Filters>
         {/* 카테고리 */}
@@ -161,7 +150,6 @@ export default function InfoWrapper({ map }: any) {
           <IoCafeOutline />
         </S.Filter>
       </S.Filters>
-
       {/* 영업 상태 */}
       <S.Filters>
         {openStatus.map(({ status, color }, idx) => (
@@ -183,50 +171,28 @@ export default function InfoWrapper({ map }: any) {
           </S.Filter>
         ))}
       </S.Filters>
-
       {/* 내 위치로 검색하기 */}
       <S.SearchCurrentLocation>
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
 
-      {/* 검색 결과 */}
-      {isSearchOn === false ? (
-        // 전체 결과
-        <S.SearchResultContainer>
-          <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
-          <S.ResultItemContainer>
-            {/* TODO: 검색결과 없을 때 예외처리 */}
-            {DB.slice(0, countOfData).map((item, idx) => {
-              return <ResultItem map={map} info={item} key={idx} />;
-            })}
-          </S.ResultItemContainer>
-          {/* 더보기 버튼 */}
-          {isEndOfData || (
-            <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
-              더보기
-            </S.LoadMoreButton>
-          )}
-        </S.SearchResultContainer>
-      ) : (
-        // 검색어 입력 시 결과
-        <S.SearchResultContainer>
-          <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
-          <S.ResultItemContainer>
-            {/* TODO: 검색결과 없을 때 예외처리 */}
-            {DB.slice(0, countOfData).map(({ item }: any, idx: any) => {
-              return <ResultItem info={item} key={idx} />;
-            })}
-          </S.ResultItemContainer>
-
-          {/* 더보기 버튼 */}
-          {isEndOfData || (
-            <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
-              더보기
-            </S.LoadMoreButton>
-          )}
-        </S.SearchResultContainer>
-      )}
+      {/* 전체 결과 */}
+      <S.SearchResultContainer>
+        <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
+        <S.ResultItemContainer>
+          {/* TODO: 검색결과 없을 때 예외처리 */}
+          {DB.slice(0, countOfData).map((item, idx) => {
+            return <ResultItem map={map} info={item} key={idx} />;
+          })}
+        </S.ResultItemContainer>
+        {/* 더보기 버튼 */}
+        {isEndOfData || (
+          <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
+            더보기
+          </S.LoadMoreButton>
+        )}
+      </S.SearchResultContainer>
     </S.Container>
   );
 }

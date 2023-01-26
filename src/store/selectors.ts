@@ -39,6 +39,7 @@ export const kakaoMap = atom({
   default: {},
 });
 
+// 전역 DB
 export const dbState: any = atom<IdbState[]>({
   key: 'dbState',
   default: data,
