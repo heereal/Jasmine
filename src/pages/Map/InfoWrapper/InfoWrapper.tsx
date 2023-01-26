@@ -125,11 +125,11 @@ export default function InfoWrapper() {
   };
 
   const handleFilterParking = () => {
-    setParking(!parking)
+    setParking(!parking);
     let result = data.filter((item) => item.ADIT_DC.includes('주차'));
 
     setDB(result);
-  }
+  };
 
   return (
     <S.Container>
