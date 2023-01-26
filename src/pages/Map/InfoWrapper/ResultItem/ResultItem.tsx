@@ -2,8 +2,12 @@ import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
+import { useRecoilState } from 'recoil';
+import { LIGHT_GRAY_COLOR, GREEN_COLOR } from '../../../../common/colors';
+import { isOpensState } from '../../../../store/selectors';
 import * as S from './ResultItem.style';
+import { useEffect } from 'react';
+import { getCurrentTime } from '../../../../common/utils';
 
 export interface ResultItemProps {
   info: {
@@ -37,23 +41,43 @@ export default function ResultItem({ info }: ResultItemProps) {
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
+    WORKDAY_OPN_BSNS_TIME: weekdayOpenTime,
+    WORKDAY_CLOS_TIME: weekdayCloseTime,
+    SAT_OPN_BSNS_TIME: weekendOpenTime,
+    SAT_CLOS_TIME: weekendCloseTime,
   } = info;
 
   const navigate = useNavigate();
+  // const [isOpen, setIsOpen] = useRecoilState(isOpensState);
 
-  // 리스트에서 특정 서점을 클릭했을 때 작동하는 함수
-  // FIXME: 왜 lat, lng type number가 안 먹지?
-  const hadleClickBookstore = (): void => {
-    navigate(`/map/${id}`);
+  // 현재 시간, 현재 요일
+  const { currentTime, day } = getCurrentTime();
+
+  // 현재 시간, 요일에 따라 영업 중, 영업 종료 구분
+  const handleIsOpen = () => {
+    // 토요일, 일요일인 경우
+    if ( day === 0 || day === 7) {
+      return currentTime >= weekendOpenTime && currentTime <= weekendCloseTime
+
+    // 평일인 경우  
+    } else {
+      return currentTime >= weekdayOpenTime && currentTime <= weekdayCloseTime
+    }
   };
 
+  // useEffect(() => {
+  //   const open = handleIsOpen()
+  //   setIsOpen(open);
+    
+  // }, []);
+
   return (
-    <S.Container onClick={hadleClickBookstore}>
+    <S.Container onClick={() => navigate(`/map/${id}`)}>
       <S.NameRow>
         <S.IconsContainer>
           <MdCircle
             style={{
-              color: LIGHT_GRAY_COLOR,
+              color: handleIsOpen() ? GREEN_COLOR : LIGHT_GRAY_COLOR,
               marginRight: '0.5rem',
             }}
           />
