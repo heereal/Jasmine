@@ -37,7 +37,7 @@ export const SearchInput = styled.input`
   width: 100%;
   border: 1px solid ${BLACK_COLOR};
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
   background-color: transparent;
 `;
@@ -45,7 +45,7 @@ export const SearchInput = styled.input`
 export const SearchButton = styled.input`
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background-color: transparent;
   position: absolute;
   right: 0;
@@ -90,6 +90,9 @@ export const Filter = styled.button`
   &:last-child {
     margin-right: 0;
   }
+  &:hover {
+    background-color: ${LIGHT_GRAY_COLOR};
+  }
 `;
 
 export const CategoryContainer = styled.div`
@@ -108,6 +111,9 @@ export const Category = styled.button`
   padding: 0.5rem 1rem;
   background-color: transparent;
   cursor: pointer;
+  &:hover {
+    background-color: ${LIGHT_GRAY_COLOR};
+  }
 `;
 
 export const IconContainer = styled.div`
@@ -172,6 +178,7 @@ export const LoadMoreButton = styled.button`
 `;
 
 export const NoResultBox = styled.div`
+  font-size: 0.9rem;
   color: ${PINK_COLOR};
   text-align: center;
   margin-top: 40px;
