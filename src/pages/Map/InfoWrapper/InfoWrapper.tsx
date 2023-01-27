@@ -1,8 +1,9 @@
 import { FormEvent, useCallback, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   currentLocationState,
+  dbDefaultState,
   dbState,
   IdbState,
 } from '../../../store/selectors';
@@ -59,6 +60,7 @@ export default function InfoWrapper({ map }: any) {
 
   // db 전역 상태
   const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+  const DBDefault = useRecoilValue<IdbState[]>(dbDefaultState);
 
   // 검색어
   const [search, setSearch] = useState<string>('');
@@ -82,7 +84,7 @@ export default function InfoWrapper({ map }: any) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let result = data.filter((item) => item.FCLTY_NM.includes(search));
+    let result = DBDefault.filter((item: any) => item.FCLTY_NM.includes(search));
 
     setDB(result);
     setSearch('');
@@ -114,7 +116,7 @@ export default function InfoWrapper({ map }: any) {
 
   // 검색 결과 초기화 핸들링 함수
   const handleResetResult = useCallback(() => {
-    setDB(data);
+    setDB(DBDefault);
     setCurrentCategory('카테고리 선택');
     setCafe(false);
     setParking(false);
