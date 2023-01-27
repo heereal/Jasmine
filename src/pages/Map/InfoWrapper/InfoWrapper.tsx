@@ -5,8 +5,6 @@ import {
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
 
-import { data } from '../../../bookstore';
-
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
@@ -81,7 +79,7 @@ export default function InfoWrapper() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let result = data.filter((item) => item.FCLTY_NM.includes(search));
+    let result = dbState.default.filter((item: any) => item.FCLTY_NM.includes(search));
 
     setDB(result);
     setSearch('');
@@ -117,7 +115,7 @@ export default function InfoWrapper() {
 
   // 검색 결과 초기화 핸들링 함수
   const handleResetResult = () => {
-    setDB(data);
+    setDB(dbState.default);
   };
 
   return (
