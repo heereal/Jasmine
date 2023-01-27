@@ -47,6 +47,7 @@ export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
   // 현재 위치 가져오기
   const location = useGeolocation();
+
   // 현재 위치 전역 상태
   const [currentLocation, setCurrentLocation] =
     useRecoilState(currentLocationState);
