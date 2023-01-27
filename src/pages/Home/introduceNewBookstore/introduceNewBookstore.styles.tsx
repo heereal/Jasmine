@@ -21,6 +21,7 @@ export const BTNMoveToFindBookstore = styled.button`
   border: none;
   font-size: x-large;
   color: white;
+  cursor: pointer;
 `;
 export const SectorIntroduceNewBookStore = styled.div`
   font-family: 'Pretendard-Regular';
