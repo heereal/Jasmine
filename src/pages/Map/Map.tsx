@@ -3,7 +3,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
-import { dbState, IdbState } from '../../store/selectors';
+import { dbState } from '../../store/selectors';
 
 import * as S from './Map.style';
 
@@ -49,7 +49,6 @@ export default function Map() {
 
     // 지도를 표시할 div와 지도 옵션으로 지도를 생성함
     const newMap = new kakao.maps.Map(mapContainer.current, options);
-    console.log('지도 생성');
 
     // 지도 확대 축소를 제어할 수 있는 줌 컨트롤 생성
     const zoomControl = new kakao.maps.ZoomControl();
@@ -66,7 +65,6 @@ export default function Map() {
   // * 마커를 생성하는 함수
   const makeMarkers = useCallback(() => {
     if (!markerImage) return;
-    console.log('마커 생성');
 
     // 기존 마커 제거
     if (markers.length > 0) {
@@ -107,7 +105,6 @@ export default function Map() {
   // * DB가 변경되면 마커 생성
   useEffect(() => {
     makeMarkers();
-    // console.log('DB 변경');
   }, [DB, makeMarkers, markerImage]);
 
   // * 라우터 파라미터로 받은 bookstoreId 값에 따라 지도 이동

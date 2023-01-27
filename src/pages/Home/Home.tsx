@@ -6,9 +6,10 @@ export default function Home() {
   return (
     <S.HomeContainer>
       <S.MainImageLocation>
-        <S.BackGroundImage
-          src={require('../../assets/images/mainimage.png')}
-          alt=""
+        <S.BackGroundImage src={getRandomImage()} alt="background" />
+        <S.Jasmin
+          src={require('../../assets/images/jasmin.png')}
+          alt="jasmin"
         />
       </S.MainImageLocation>
 
@@ -20,3 +21,18 @@ export default function Home() {
     </S.HomeContainer>
   );
 }
+
+// 배경 이미지 배열
+const backgroundImages = [
+  require('../../assets/images/mainimage1.jpeg'),
+  require('../../assets/images/mainimage2.jpeg'),
+  require('../../assets/images/mainimage3.jpeg'),
+  require('../../assets/images/mainimage4.jpeg'),
+  require('../../assets/images/mainimage5.jpeg'),
+];
+
+// 배경 이미지 중 랜덤으로 하나를 선택
+const getRandomImage = () => {
+  const idx = Math.floor(Math.random() * backgroundImages.length);
+  return backgroundImages[idx];
+};

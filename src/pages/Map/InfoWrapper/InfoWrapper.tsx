@@ -5,7 +5,6 @@ import {
   currentLocationState,
   dbDefaultState,
   dbState,
-  IdbState,
 } from '../../../store/selectors';
 
 import { data } from '../../../bookstore';

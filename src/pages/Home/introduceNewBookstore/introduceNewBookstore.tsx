@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router-dom';
+import newBookstores from '../../../newBookstores';
 import * as S from './introduceNewBookstore.styles';
 
 export default function IntroduceNewBookstore() {
+  const navigate = useNavigate();
+
   return (
     <>
       <S.MoveToFindBookstore>
@@ -12,37 +16,15 @@ export default function IntroduceNewBookstore() {
           NEW : 따끈따끈 신규 서점
         </S.H1IntroduceNewBookStore>
         <S.WrapperCardsIntroduceNewBookStore>
-          <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore
-              src={require('../../../assets/images/mainimage.png')}
-              alt=""
-            />
-          </S.CardIntroductNewBookStore>
-
-          <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore
-              src={require('../../../assets/images/mainimage.png')}
-              alt=""
-            />
-          </S.CardIntroductNewBookStore>
-
-          <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore
-              src={require('../../../assets/images/mainimage.png')}
-              alt=""
-            />
-          </S.CardIntroductNewBookStore>
-
-          <S.CardIntroductNewBookStore>
-            <S.H2IntroduceNewBookStore> 헬로인디 </S.H2IntroduceNewBookStore>
-            <S.IMGIntroduceNewBookStore
-              src={require('../../../assets/images/mainimage.png')}
-              alt=""
-            />
-          </S.CardIntroductNewBookStore>
+          {newBookstores.map(({ name, imgSrc, id }, idx) => (
+            <S.CardIntroductNewBookStore
+              onClick={() => navigate(`/map/${id}`)}
+              key={idx}
+            >
+              <S.H2IntroduceNewBookStore> {name} </S.H2IntroduceNewBookStore>
+              <S.IMGIntroduceNewBookStore src={imgSrc} alt="" />
+            </S.CardIntroductNewBookStore>
+          ))}
         </S.WrapperCardsIntroduceNewBookStore>
       </S.SectorIntroduceNewBookStore>
     </>
