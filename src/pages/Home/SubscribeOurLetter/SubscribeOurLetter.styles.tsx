@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SectorSubscribeOurLetter = styled.div`
+  font-family: 'Pretendard-Regular';
   width: 100%;
   height: 300px;
   display: flex;
