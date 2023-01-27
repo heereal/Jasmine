@@ -84,7 +84,15 @@ export default function InfoWrapper({ map }: any) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let result = DBDefault.filter((item: any) => item.FCLTY_NM.includes(search));
+    let result = DBDefault;
+
+    if (search) {
+      result = result.filter(
+        (item) =>
+          item.FCLTY_NM.includes(search) ||
+          item.FCLTY_ROAD_NM_ADDR.includes(search),
+      );
+    }
 
     if (currentCategory !== '카테고리 선택') {
       result = result.filter((item) => item.MLSFC_NM.includes(currentCategory));
@@ -96,6 +104,10 @@ export default function InfoWrapper({ map }: any) {
 
     if (cafe) {
       result = result.filter((item) => item.ADIT_DC.includes('카페'));
+    }
+
+    if (openFilter === 0) {
+      result = result.filter((item) => item.isOpen === true);
     }
 
     setDB(result);
