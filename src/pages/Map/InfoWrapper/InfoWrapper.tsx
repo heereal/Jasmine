@@ -41,10 +41,6 @@ const openStatus = [
     status: '영업중',
     color: GREEN_COLOR,
   },
-  {
-    status: '영업종료',
-    color: DARK_GRAY_COLOR,
-  },
 ];
 
 export default function InfoWrapper({ map }: any) {
@@ -79,11 +75,35 @@ export default function InfoWrapper({ map }: any) {
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
   const [countOfData, setCountOfData] = useState<number>(10);
 
-  // 검색 form 제출 핸들링 함수
+  //! 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let result = DBDefault.filter((item: any) => item.FCLTY_NM.includes(search));
+    let result = DBDefault;
+
+    if (search) {
+      result = result.filter(
+        (item) =>
+          item.FCLTY_NM.includes(search) ||
+          item.FCLTY_ROAD_NM_ADDR.includes(search),
+      );
+    }
+
+    if (currentCategory !== '카테고리 선택') {
+      result = result.filter((item) => item.MLSFC_NM.includes(currentCategory));
+    }
+
+    if (parking) {
+      result = result.filter((item) => item.ADIT_DC.includes('주차'));
+    }
+
+    if (cafe) {
+      result = result.filter((item) => item.ADIT_DC.includes('카페'));
+    }
+
+    if (openFilter === 0) {
+      result = result.filter((item) => item.isOpen === true);
+    }
 
     setDB(result);
     setSearch('');
@@ -203,19 +223,6 @@ export default function InfoWrapper({ map }: any) {
 
   return (
     <S.Container>
-      {/* 검색 */}
-      <S.SearchForm onSubmit={handleSubmit}>
-        <S.SearchInput
-          type="text"
-          placeholder="서점을 찾아보세요."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <S.ResetButton onClick={handleResetResult}>
-          <BiX />
-        </S.ResetButton>
-        <S.SearchButton type="submit" value="검색" />
-      </S.SearchForm>
       {/* 필터 */}
       <S.Filters>
         {/* 카테고리 */}
@@ -248,10 +255,8 @@ export default function InfoWrapper({ map }: any) {
           backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <IoCafeOutline />
+          {/* 영업상태 */}
         </S.Filter>
-      </S.Filters>
-      {/* 영업 상태 */}
-      <S.Filters>
         {openStatus.map(({ status, color }, idx) => (
           <S.Filter
             width="33%"
@@ -271,27 +276,48 @@ export default function InfoWrapper({ map }: any) {
           </S.Filter>
         ))}
       </S.Filters>
+      {/* 영업 상태 */}
+
       {/* 내 위치로 검색하기 */}
       <S.SearchCurrentLocation onClick={handleSearchCurrentLocationClick}>
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
+      {/* 검색 */}
+      <S.SearchForm onSubmit={handleSubmit}>
+        <S.SearchInput
+          type="text"
+          placeholder="서점을 찾아보세요"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+        />
+        <S.ResetButton onClick={handleResetResult}>
+          <BiX />
+        </S.ResetButton>
+        <S.SearchButton type="submit" value="검색" />
+      </S.SearchForm>
 
       {/* 전체 결과 */}
       <S.SearchResultContainer>
         <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
         <S.ResultItemContainer>
+          {DB.length === 0 ? (
+            <S.NoResultBox>
+              🥹 해당 검색어로 검색된 결과가 없습니다
+            </S.NoResultBox>
+          ) : null}
           {/* TODO: 검색결과 없을 때 예외처리 */}
           {DB.slice(0, countOfData).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
         {/* 더보기 버튼 */}
-        {isEndOfData || (
+        {DB.length > 19 ? (
           <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
             더보기
           </S.LoadMoreButton>
-        )}
+        ) : null}
       </S.SearchResultContainer>
     </S.Container>
   );

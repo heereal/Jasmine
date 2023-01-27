@@ -24,8 +24,12 @@ export default function Overlay({ info }: any) {
             }}
           />
           <S.Name>{name}</S.Name>
-          <FaParking style={{ marginRight: '0.2rem' }} />
-          <IoCafeOutline />
+          {info.ADIT_DC.includes('주차') ? (
+            <FaParking style={{ marginRight: '0.2rem' }} />
+          ) : (
+            <></>
+          )}
+          {info.ADIT_DC.includes('카페') ? <IoCafeOutline /> : <></>}
         </S.IconsContainer>
         <S.Category>{category}</S.Category>
       </S.NameRow>

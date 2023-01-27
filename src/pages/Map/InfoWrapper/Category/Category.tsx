@@ -14,6 +14,8 @@ export default function Category({
   currentCategory,
   setCurrentCategory,
 }: CategoryProps) {
+  //
+
   // 카테고리 클릭 핸들링 함수
   const handleCategoryClick = (category: string) => {
     // 현재 카테고리와 같은 카테고리를 클릭했을 경우 초기화

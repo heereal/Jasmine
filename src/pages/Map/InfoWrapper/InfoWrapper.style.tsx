@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import {
   BLACK_COLOR,
+  BLUE_COLOR,
   LIGHT_GRAY_COLOR,
   PINK_COLOR,
+  YELLOW_COLOR,
+  DARK_GRAY_COLOR,
 } from '../../../common/colors';
 import { PAGE_HEIGHT } from '../../../common/layout';
 
@@ -34,7 +37,7 @@ export const SearchInput = styled.input`
   width: 100%;
   border: 1px solid ${BLACK_COLOR};
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
   background-color: transparent;
 `;
@@ -42,7 +45,7 @@ export const SearchInput = styled.input`
 export const SearchButton = styled.input`
   border: none;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background-color: transparent;
   position: absolute;
   right: 0;
@@ -79,18 +82,22 @@ export const Filter = styled.button`
   width: ${(props: FilterProps) => props.width};
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
-  font-size: 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
   padding: 0.5rem 0;
   cursor: pointer;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   &:last-child {
     margin-right: 0;
+  }
+  &:hover {
+    background-color: ${LIGHT_GRAY_COLOR};
   }
 `;
 
 export const CategoryContainer = styled.div`
-  width: 60%;
-  margin-right: 1rem;
+  width: 55%;
+  margin-right: 0.5rem;
   position: relative;
 `;
 
@@ -98,11 +105,15 @@ export const Category = styled.button`
   width: 100%;
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
+  border-radius: 5px;
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
   background-color: transparent;
   cursor: pointer;
+  &:hover {
+    background-color: ${LIGHT_GRAY_COLOR};
+  }
 `;
 
 export const IconContainer = styled.div`
@@ -121,6 +132,7 @@ export const SearchCurrentLocation = styled.button`
   outline: none;
   font-size: 1rem;
   margin: 0.5rem auto 1.5rem auto;
+  margin-top: 20px;
   cursor: pointer;
   transition: 80ms ease-in-out;
   &:hover {
@@ -139,7 +151,7 @@ export const SearchResultContainer = styled.div`
 export const Summary = styled.div`
   width: 100%;
   font-size: 0.8rem;
-  color: ${LIGHT_GRAY_COLOR};
+  color: ${DARK_GRAY_COLOR};
   border-bottom: 1px solid ${BLACK_COLOR};
   padding-bottom: 0.5rem;
 `;
@@ -163,4 +175,13 @@ export const LoadMoreButton = styled.button`
   &:hover {
     color: ${PINK_COLOR};
   }
+`;
+
+export const NoResultBox = styled.div`
+  font-size: 0.9rem;
+  color: ${PINK_COLOR};
+  text-align: center;
+  margin-top: 40px;
+  padding: 15px;
+  border: 1px solid ${BLACK_COLOR};
 `;
