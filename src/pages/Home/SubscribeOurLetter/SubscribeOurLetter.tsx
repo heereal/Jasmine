@@ -13,30 +13,27 @@ export default function SubscribeOurLetter() {
   const [subscriberEmail, setSubscriberEmail] = useState('');
   const [submitTime, setSubmitTime] = useState('');
 
-  // 구독자 추가
-
+  // 구독자 추가 함수 // Trigger Email 이 포함되어 있음
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const subscriberRef = collection(db, 'subscriber');
     const subscriber = {
+      to: subscriberEmail,
       name: subscriberName,
-      email: subscriberEmail,
       submitTime: submitTime,
+
+      message: {
+        subject: '[쟈스민 독립서점 소식지]를 구독해주셔서 감사합니다.',
+        text: '',
+        html: ' <img src ="https://user-images.githubusercontent.com/78587041/214996034-50d81353-fcc8-48da-8694-7dd2e04dfc40.png" alt ="Thank you for subscribing out Letter" width ="650px" height="1000px"> ',
+      },
     };
+
     await addDoc(subscriberRef, subscriber);
     setSubscriberName('');
     setSubscriberEmail('');
-  };
 
-  // 이메일 형식 검사 name이 subscriberEmail인 input에만 적용
-  const handleEmail = (e: React.FormEvent<HTMLInputElement>) => {
-    const subscriberEmail = e.currentTarget.value;
-    const emailReg =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if (!emailReg.test(subscriberEmail)) {
-      alert('이메일 형식이 올바르지 않습니다.');
-      e.currentTarget.value = '';
-    }
+    alert('구독이 완료되었습니다.');
   };
 
   return (
@@ -64,6 +61,13 @@ export default function SubscribeOurLetter() {
           >
             구독
           </S.BTNSubscribeSubmit>
+          <S.SeeOurAgreement>
+            <p>
+              개인정보 수집 및 이용에 대해 동의하십니까?{' '}
+              <a href="https://jasmin-bookstore.web.app/privacy">자세히 보기</a>
+              <S.SmallCheckBox type="checkbox" />
+            </p>
+          </S.SeeOurAgreement>
         </form>
       </S.SubscribeInputBox>
     </S.SectorSubscribeOurLetter>
