@@ -43,7 +43,7 @@ declare interface ResultItemProps {
     RSTDE_GUID_CN: number | string;
     TEL_NO: number | string;
     OPTN_DC: number | string;
-    ADIT_DC: number | string;
+    ADIT_DC: string;
     isOpen: boolean;
   };
 }
