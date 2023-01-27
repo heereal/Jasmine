@@ -82,10 +82,11 @@ export const Filter = styled.button`
   width: ${(props: FilterProps) => props.width};
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
+  border-radius: 5px;
   font-size: 0.9rem;
   padding: 0.5rem 0;
   cursor: pointer;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   &:last-child {
     margin-right: 0;
   }
@@ -93,7 +94,7 @@ export const Filter = styled.button`
 
 export const CategoryContainer = styled.div`
   width: 55%;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   position: relative;
 `;
 
@@ -101,6 +102,7 @@ export const Category = styled.button`
   width: 100%;
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
+  border-radius: 5px;
   outline: none;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
@@ -124,6 +126,7 @@ export const SearchCurrentLocation = styled.button`
   outline: none;
   font-size: 1rem;
   margin: 0.5rem auto 1.5rem auto;
+  margin-top: 20px;
   cursor: pointer;
   transition: 80ms ease-in-out;
   &:hover {
