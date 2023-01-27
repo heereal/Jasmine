@@ -2,10 +2,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import { categories } from '../../../../common/data';
 import * as S from './Category.style';
-import { useRecoilState } from 'recoil';
-import { dbState } from '../../../../store/selectors';
-import { IdbState } from '../../../../store/selectors';
-import InfoWrapper from '../InfoWrapper';
 
 interface CategoryProps {
   setOpenCategory: Dispatch<SetStateAction<boolean>>;
