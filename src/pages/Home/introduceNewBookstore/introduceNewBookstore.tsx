@@ -16,8 +16,11 @@ export default function IntroduceNewBookstore() {
           NEW : 따끈따끈 신규 서점
         </S.H1IntroduceNewBookStore>
         <S.WrapperCardsIntroduceNewBookStore>
-          {newBookstores.map(({ name, imgSrc, id }) => (
-            <S.CardIntroductNewBookStore onClick={() => navigate(`/map/${id}`)}>
+          {newBookstores.map(({ name, imgSrc, id }, idx) => (
+            <S.CardIntroductNewBookStore
+              onClick={() => navigate(`/map/${id}`)}
+              key={idx}
+            >
               <S.H2IntroduceNewBookStore> {name} </S.H2IntroduceNewBookStore>
               <S.IMGIntroduceNewBookStore src={imgSrc} alt="" />
             </S.CardIntroductNewBookStore>

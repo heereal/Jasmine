@@ -41,3 +41,14 @@ export const BTNSubscribeSubmit = styled.button`
   ::placeholder {
   }
 `;
+
+export const SeeOurAgreement = styled.div`
+  text-align: center;
+  font-size: 8px;
+`;
+
+export const SmallCheckBox = styled.input`
+  width: 7px;
+  height: 7px;
+  margin-left: 5px;
+`;
