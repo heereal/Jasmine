@@ -140,6 +140,7 @@ export default function InfoWrapper({ map }: any) {
     setCafe(false);
     setParking(false);
     setOpenFilter(2);
+    setSearch('');
   }, [setDB, setCurrentCategory, setCafe, setParking, setOpenFilter]);
 
   // 내 위치로 검색하기 버튼 클릭 핸들링 함수
