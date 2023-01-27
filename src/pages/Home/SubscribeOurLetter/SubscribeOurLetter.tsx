@@ -36,16 +36,6 @@ export default function SubscribeOurLetter() {
     alert('구독이 완료되었습니다.');
   };
 
-  // 체크박스에 체크가 되어 있는지 확인하는 함수
-  // const checkAgreement = () => {
-  //   const checkBox = document.querySelector('input[type="checkbox"]');
-  //   if (checkBox.checked) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
   return (
     <S.SectorSubscribeOurLetter>
       <S.H1SubscribeOurLetter>소식지를 구독하세요.</S.H1SubscribeOurLetter>
