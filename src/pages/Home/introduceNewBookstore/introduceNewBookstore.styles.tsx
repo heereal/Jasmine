@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const MoveToFindBookstore = styled.div`
+  font-family: 'Pretendard-Regular';
   width: 100%;
   height: 150px;
   display: flex;
@@ -22,6 +23,7 @@ export const BTNMoveToFindBookstore = styled.button`
   color: white;
 `;
 export const SectorIntroduceNewBookStore = styled.div`
+  font-family: 'Pretendard-Regular';
   width: 100%;
   height: 400px;
   display: flex;
@@ -56,15 +58,19 @@ export const CardIntroductNewBookStore = styled.div`
   height: 220px;
   padding: 20px;
   margin: 15px;
+  cursor: pointer;
 `;
 export const H2IntroduceNewBookStore = styled.div`
-  font-size: xx-large;
-  font-weight: 900;
+  font-size: x-large;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
 export const IMGIntroduceNewBookStore = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 0.3rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
