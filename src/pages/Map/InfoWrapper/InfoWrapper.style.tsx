@@ -50,6 +50,7 @@ export const SearchButton = styled.input`
   position: absolute;
   right: 0;
   padding-right: 1rem;
+  cursor: pointer;
 `;
 
 export const ResetButton = styled.div`
@@ -57,6 +58,7 @@ export const ResetButton = styled.div`
   position: absolute;
   right: 0;
   padding-right: 1rem;
+  padding-top: 0.2rem;
   margin-right: 30px;
   cursor: pointer;
 `;
