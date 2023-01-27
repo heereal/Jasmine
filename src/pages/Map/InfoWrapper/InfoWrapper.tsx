@@ -42,10 +42,6 @@ const openStatus = [
     status: '영업중',
     color: GREEN_COLOR,
   },
-  {
-    status: '영업종료',
-    color: DARK_GRAY_COLOR,
-  },
 ];
 
 export default function InfoWrapper({ map }: any) {
@@ -228,20 +224,6 @@ export default function InfoWrapper({ map }: any) {
 
   return (
     <S.Container>
-      {/* 검색 */}
-      {/* <S.SearchForm onSubmit={handleSubmit}>
-        <S.SearchInput
-          type="text"
-          placeholder="서점을 찾아보세요"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          autoFocus
-        />
-        <S.ResetButton onClick={handleResetResult}>
-          <BiX />
-        </S.ResetButton>
-        <S.SearchButton type="submit" value="검색" />
-      </S.SearchForm> */}
       {/* 필터 */}
       <S.Filters>
         {/* 카테고리 */}
@@ -274,10 +256,8 @@ export default function InfoWrapper({ map }: any) {
           backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
         >
           <IoCafeOutline />
+          {/* 영업상태 */}
         </S.Filter>
-      </S.Filters>
-      {/* 영업 상태 */}
-      <S.Filters>
         {openStatus.map(({ status, color }, idx) => (
           <S.Filter
             width="33%"
@@ -297,11 +277,14 @@ export default function InfoWrapper({ map }: any) {
           </S.Filter>
         ))}
       </S.Filters>
+      {/* 영업 상태 */}
+
       {/* 내 위치로 검색하기 */}
       <S.SearchCurrentLocation onClick={handleSearchCurrentLocationClick}>
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
+      {/* 검색 */}
       <S.SearchForm onSubmit={handleSubmit}>
         <S.SearchInput
           type="text"

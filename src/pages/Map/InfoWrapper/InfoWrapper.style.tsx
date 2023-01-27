@@ -82,7 +82,7 @@ export const Filter = styled.button`
   width: ${(props: FilterProps) => props.width};
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 0;
   cursor: pointer;
   margin-right: 1rem;
@@ -92,7 +92,7 @@ export const Filter = styled.button`
 `;
 
 export const CategoryContainer = styled.div`
-  width: 60%;
+  width: 55%;
   margin-right: 1rem;
   position: relative;
 `;
@@ -102,7 +102,7 @@ export const Category = styled.button`
   text-align: center;
   border: 1px solid ${BLACK_COLOR};
   outline: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
   background-color: transparent;
   cursor: pointer;
