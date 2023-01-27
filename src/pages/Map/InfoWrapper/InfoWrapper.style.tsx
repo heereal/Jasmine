@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import {
   BLACK_COLOR,
+  BLUE_COLOR,
   LIGHT_GRAY_COLOR,
   PINK_COLOR,
+  YELLOW_COLOR,
+  DARK_GRAY_COLOR,
 } from '../../../common/colors';
 import { PAGE_HEIGHT } from '../../../common/layout';
 
@@ -139,7 +142,7 @@ export const SearchResultContainer = styled.div`
 export const Summary = styled.div`
   width: 100%;
   font-size: 0.8rem;
-  color: ${LIGHT_GRAY_COLOR};
+  color: ${DARK_GRAY_COLOR};
   border-bottom: 1px solid ${BLACK_COLOR};
   padding-bottom: 0.5rem;
 `;
@@ -163,4 +166,12 @@ export const LoadMoreButton = styled.button`
   &:hover {
     color: ${PINK_COLOR};
   }
+`;
+
+export const NoResultBox = styled.div`
+  color: ${PINK_COLOR};
+  text-align: center;
+  margin-top: 40px;
+  padding: 15px;
+  border: 1px solid ${BLACK_COLOR};
 `;

@@ -114,19 +114,6 @@ export default function InfoWrapper({ map }: any) {
     setSearch('');
   };
 
-  // 카테고리 클릭 핸들링 함수
-  const handleCategoryClick = (category: string) => {
-    // 현재 카테고리와 같은 카테고리를 클릭했을 경우 초기화
-    if (currentCategory === category) {
-      setCurrentCategory('카테고리 선택');
-      setOpenCategory(false);
-      return;
-    }
-    // 현재 카테고리와 다른 카테고리를 클릭했을 경우 카테고리 변경
-    setCurrentCategory(category);
-    setOpenCategory(false);
-  };
-
   // 영업 상태 클릭 핸들링 함수
   const handleOpenStatusClick = useCallback(
     (idx: number) => {
@@ -242,7 +229,7 @@ export default function InfoWrapper({ map }: any) {
   return (
     <S.Container>
       {/* 검색 */}
-      <S.SearchForm onSubmit={handleSubmit}>
+      {/* <S.SearchForm onSubmit={handleSubmit}>
         <S.SearchInput
           type="text"
           placeholder="서점을 찾아보세요"
@@ -254,7 +241,7 @@ export default function InfoWrapper({ map }: any) {
           <BiX />
         </S.ResetButton>
         <S.SearchButton type="submit" value="검색" />
-      </S.SearchForm>
+      </S.SearchForm> */}
       {/* 필터 */}
       <S.Filters>
         {/* 카테고리 */}
@@ -315,22 +302,40 @@ export default function InfoWrapper({ map }: any) {
         <BiCurrentLocation style={{ marginRight: '0.5rem' }} />
         <span>내 위치로 검색하기</span>
       </S.SearchCurrentLocation>
+      <S.SearchForm onSubmit={handleSubmit}>
+        <S.SearchInput
+          type="text"
+          placeholder="서점을 찾아보세요"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+        />
+        <S.ResetButton onClick={handleResetResult}>
+          <BiX />
+        </S.ResetButton>
+        <S.SearchButton type="submit" value="검색" />
+      </S.SearchForm>
 
       {/* 전체 결과 */}
       <S.SearchResultContainer>
         <S.Summary>총 {DB.length}건의 검색결과</S.Summary>
         <S.ResultItemContainer>
+          {DB.length === 0 ? (
+            <S.NoResultBox>
+              🥹 해당 검색어로 검색된 결과가 없습니다
+            </S.NoResultBox>
+          ) : null}
           {/* TODO: 검색결과 없을 때 예외처리 */}
           {DB.slice(0, countOfData).map((item, idx) => {
             return <ResultItem info={item} key={idx} />;
           })}
         </S.ResultItemContainer>
         {/* 더보기 버튼 */}
-        {isEndOfData || (
+        {DB.length > 19 ? (
           <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
             더보기
           </S.LoadMoreButton>
-        )}
+        ) : null}
       </S.SearchResultContainer>
     </S.Container>
   );
