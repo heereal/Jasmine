@@ -42,8 +42,9 @@ export const dbState: any = atom<IdbState[]>({
     handleIsOpen(item.WORKDAY_OPN_BSNS_TIME, item.WORKDAY_CLOS_TIME, item.SAT_OPN_BSNS_TIME, item.SAT_CLOS_TIME)})),
 });
 
-// 영업 중, 영업 종료(삭제예정)
-export const isOpensState = atom({
-  key: 'isOpen',
-  default: false,
-})
+// default 전역 DB
+export const dbDefaultState: any = atom<IdbState[]>({
+  key: 'dbDefaultState',
+  default: data.map((item) => ({...item, isOpen:
+    handleIsOpen(item.WORKDAY_OPN_BSNS_TIME, item.WORKDAY_CLOS_TIME, item.SAT_OPN_BSNS_TIME, item.SAT_CLOS_TIME)})),
+});

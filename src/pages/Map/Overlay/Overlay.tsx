@@ -1,7 +1,7 @@
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
-import { LIGHT_GRAY_COLOR } from '../../../common/colors';
+import { LIGHT_GRAY_COLOR, GREEN_COLOR } from '../../../common/colors';
 import * as S from './Overlay.style';
 
 export default function Overlay({ info }: any) {
@@ -10,6 +10,7 @@ export default function Overlay({ info }: any) {
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
+    isOpen,
   } = info;
 
   return (
@@ -18,7 +19,7 @@ export default function Overlay({ info }: any) {
         <S.IconsContainer>
           <MdCircle
             style={{
-              color: LIGHT_GRAY_COLOR,
+              color: isOpen ? GREEN_COLOR : LIGHT_GRAY_COLOR,
               marginRight: '0.5rem',
             }}
           />
