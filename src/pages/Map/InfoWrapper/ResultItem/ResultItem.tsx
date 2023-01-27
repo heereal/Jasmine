@@ -2,7 +2,7 @@ import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { LIGHT_GRAY_COLOR } from '../../../../common/colors';
+import { LIGHT_GRAY_COLOR, GREEN_COLOR } from '../../../../common/colors';
 import * as S from './ResultItem.style';
 
 export interface ResultItemProps {
@@ -27,6 +27,7 @@ export interface ResultItemProps {
     TEL_NO: number | string;
     OPTN_DC: number | string;
     ADIT_DC: string;
+    isOpen: boolean;
   };
 }
 
@@ -37,23 +38,18 @@ export default function ResultItem({ info }: ResultItemProps) {
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
+    isOpen,
   } = info;
 
   const navigate = useNavigate();
 
-  // 리스트에서 특정 서점을 클릭했을 때 작동하는 함수
-  // FIXME: 왜 lat, lng type number가 안 먹지?
-  const hadleClickBookstore = (): void => {
-    navigate(`/map/${id}`);
-  };
-
   return (
-    <S.Container onClick={hadleClickBookstore}>
+    <S.Container onClick={() => navigate(`/map/${id}`)}>
       <S.NameRow>
         <S.IconsContainer>
           <MdCircle
             style={{
-              color: LIGHT_GRAY_COLOR,
+              color: isOpen ? GREEN_COLOR : LIGHT_GRAY_COLOR,
               marginRight: '0.5rem',
             }}
           />

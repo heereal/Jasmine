@@ -1,8 +1,9 @@
 import { FormEvent, useCallback, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   currentLocationState,
+  dbDefaultState,
   dbState,
   IdbState,
 } from '../../../store/selectors';
@@ -59,6 +60,7 @@ export default function InfoWrapper({ map }: any) {
 
   // db 전역 상태
   const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+  const DBDefault = useRecoilValue<IdbState[]>(dbDefaultState);
 
   // 검색어
   const [search, setSearch] = useState<string>('');
@@ -82,10 +84,7 @@ export default function InfoWrapper({ map }: any) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 검색 결과 필터
-    let result = data.filter((item) => item.FCLTY_NM.includes(search));
-
-    // 검색어, 카테고리, 주차, 카페, 영업 상태 필터
+    let result = DBDefault.filter((item: any) => item.FCLTY_NM.includes(search));
 
     if (currentCategory !== '카테고리 선택') {
       result = result.filter((item) => item.MLSFC_NM.includes(currentCategory));
@@ -98,8 +97,6 @@ export default function InfoWrapper({ map }: any) {
     if (cafe) {
       result = result.filter((item) => item.ADIT_DC.includes('카페'));
     }
-
-    // 영업 중 / 영업 종료 추가
 
     setDB(result);
     setSearch('');
@@ -131,7 +128,7 @@ export default function InfoWrapper({ map }: any) {
 
   // 검색 결과 초기화 핸들링 함수
   const handleResetResult = useCallback(() => {
-    setDB(data);
+    setDB(DBDefault);
     setCurrentCategory('카테고리 선택');
     setCafe(false);
     setParking(false);
