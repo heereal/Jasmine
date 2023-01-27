@@ -8,7 +8,9 @@ export default function IntroduceNewBookstore() {
   return (
     <>
       <S.MoveToFindBookstore>
-        <S.BTNMoveToFindBookstore> 🔍 독립서점 찾기 </S.BTNMoveToFindBookstore>
+        <S.BTNMoveToFindBookstore onClick={() => navigate(`/map/`)}>
+          🔍 독립서점 찾기
+        </S.BTNMoveToFindBookstore>
       </S.MoveToFindBookstore>
 
       <S.SectorIntroduceNewBookStore>
