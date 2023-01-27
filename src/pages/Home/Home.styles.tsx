@@ -10,7 +10,6 @@ export const MainImageLocation = styled.div`
 `;
 export const BackGroundImage = styled.img`
   height: 100%;
-
   width: 100%;
-  max-width: 1200px;
+  object-fit: cover;
 `;
