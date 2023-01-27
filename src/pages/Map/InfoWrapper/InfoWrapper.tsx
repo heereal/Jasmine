@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -10,7 +10,6 @@ import {
 import { data } from '../../../bookstore';
 import {
   BLUE_COLOR,
-  DARK_GRAY_COLOR,
   GREEN_COLOR,
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
@@ -27,6 +26,7 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 import { useNavigate } from 'react-router-dom';
+import { useSearch } from '../../../hooks/useSearch';
 
 // 영업 상태 enum
 enum openFilterEnum {
@@ -62,53 +62,30 @@ export default function InfoWrapper({ map }: any) {
   const [search, setSearch] = useState<string>('');
 
   // 현재 카테고리
-  const [currentCategory, setCurrentCategory] =
-    useState<string>('카테고리 선택');
+
   // 카테고리 드롭다운 상태
   const [openCategory, setOpenCategory] = useState<boolean>(false);
 
   // 주차, 카페, 영업 상태 필터
-  const [parking, setParking] = useState<boolean>(false);
-  const [cafe, setCafe] = useState<boolean>(false);
-  const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
 
   // 검색결과 데이터 끝 여부
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
   const [countOfData, setCountOfData] = useState<number>(10);
 
   //! 검색 form 제출 핸들링 함수
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    let result = DBDefault;
-
-    if (search) {
-      result = result.filter(
-        (item) =>
-          item.FCLTY_NM.includes(search) ||
-          item.FCLTY_ROAD_NM_ADDR.includes(search),
-      );
-    }
-
-    if (currentCategory !== '카테고리 선택') {
-      result = result.filter((item) => item.MLSFC_NM.includes(currentCategory));
-    }
-
-    if (parking) {
-      result = result.filter((item) => item.ADIT_DC.includes('주차'));
-    }
-
-    if (cafe) {
-      result = result.filter((item) => item.ADIT_DC.includes('카페'));
-    }
-
-    if (openFilter === 0) {
-      result = result.filter((item) => item.isOpen === true);
-    }
-
-    setDB(result);
-    setSearch('');
-  };
+  const {
+    handleSubmit,
+    handleResetResult,
+    setCurrentCategory,
+    setCafe,
+    setParking,
+    openFilter,
+    setOpenFilter,
+    currentCategory,
+    cafe,
+    parking,
+  } = useSearch(DBDefault, search, setDB, setSearch, openFilterEnum);
 
   // 영업 상태 클릭 핸들링 함수
   const handleOpenStatusClick = useCallback(
@@ -134,15 +111,7 @@ export default function InfoWrapper({ map }: any) {
     setCountOfData(countOfData + 10);
   }, [countOfData, DB.length]);
 
-  // 검색 결과 초기화 핸들링 함수
-  const handleResetResult = useCallback(() => {
-    setDB(DBDefault);
-    setCurrentCategory('카테고리 선택');
-    setCafe(false);
-    setParking(false);
-    setOpenFilter(2);
-    setSearch('');
-  }, [setDB, setCurrentCategory, setCafe, setParking, setOpenFilter]);
+  //! 검색 결과 초기화 핸들링 함수
 
   // 내 위치로 검색하기 버튼 클릭 핸들링 함수
   const handleSearchCurrentLocationClick = useCallback(() => {
