@@ -7,8 +7,7 @@ export const Overlay = styled.div`
   opacity: 0.9;
   z-index: 3;
   width: 400px;
-  left: -200px;
-  top: -280px;
+  transform: translate(-50%, -115%);
   padding: 1rem;
   border: 1px solid ${BLACK_COLOR};
   border-radius: 0.5rem;
@@ -48,6 +47,7 @@ export const Address = styled.div`
 `;
 
 export const Description = styled.div`
+  white-space: pre-wrap;
   font-size: 0.9rem;
   color: ${BLACK_COLOR};
   margin-bottom: 1rem;
@@ -71,6 +71,7 @@ export const RowHeader = styled.div`
 `;
 
 export const RowContent = styled.div`
+  white-space: pre-wrap;
   font-size: 0.9rem;
   color: ${BLACK_COLOR};
 `;
