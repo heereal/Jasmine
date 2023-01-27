@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import { categories } from '../../../../common/data';
+import { useCategory } from '../../../../hooks/useCategory';
 import * as S from './Category.style';
 
 interface CategoryProps {
@@ -14,20 +15,12 @@ export default function Category({
   currentCategory,
   setCurrentCategory,
 }: CategoryProps) {
-  //
-
   // 카테고리 클릭 핸들링 함수
-  const handleCategoryClick = (category: string) => {
-    // 현재 카테고리와 같은 카테고리를 클릭했을 경우 초기화
-    if (currentCategory === category) {
-      setCurrentCategory('카테고리 선택');
-      setOpenCategory(false);
-      return;
-    }
-    // 현재 카테고리와 다른 카테고리를 클릭했을 경우 카테고리 변경
-    setCurrentCategory(category);
-    setOpenCategory(false);
-  };
+  const { handleCategoryClick } = useCategory(
+    currentCategory,
+    setCurrentCategory,
+    setOpenCategory,
+  );
 
   return (
     <S.Container>

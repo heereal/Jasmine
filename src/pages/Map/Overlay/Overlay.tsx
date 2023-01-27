@@ -10,6 +10,12 @@ export default function Overlay({ info }: any) {
     MLSFC_NM: category,
     FCLTY_ROAD_NM_ADDR: address,
     OPTN_DC: description,
+    RSTDE_GUID_CN: closeDay,
+    TEL_NO: tel,
+    WORKDAY_OPN_BSNS_TIME: weekdayOpenTime,
+    WORKDAY_CLOS_TIME: weekdayCloseTime,
+    SAT_OPN_BSNS_TIME: weekendOpenTime,
+    SAT_CLOS_TIME: weekendCloseTime,
     isOpen,
   } = info;
 
@@ -42,17 +48,32 @@ export default function Overlay({ info }: any) {
       <S.Row>
         <S.RowHeader>운영시간</S.RowHeader>
         <S.RowContent>
-          <div>평일 9시~18시</div>
-          <div>주말 9시~18시</div>
+          {
+            // 운영시간이 없는 경우 '정보 없음' 표시
+            weekdayOpenTime === '' ? (
+              '정보 없음'
+            ) : (
+              <>
+                <div>
+                  평일 {`${weekdayOpenTime}`.slice(0, 2)}시~
+                  {`${weekdayCloseTime}`.slice(0, 2)}시
+                </div>
+                <div>
+                  주말 {`${weekendOpenTime}`.slice(0, 2)}시~
+                  {`${weekendCloseTime}`.slice(0, 2)}시
+                </div>
+              </>
+            )
+          }
         </S.RowContent>
       </S.Row>
       <S.Row>
         <S.RowHeader>휴무</S.RowHeader>
-        <S.RowContent>목요일 14:00~20:00, 일요일 정기휴무</S.RowContent>
+        <S.RowContent>{closeDay === '' ? '정보 없음' : closeDay}</S.RowContent>
       </S.Row>
       <S.Row>
         <S.RowHeader>전화</S.RowHeader>
-        <S.RowContent>02)064-722-2654</S.RowContent>
+        <S.RowContent>{tel === '' ? '정보 없음' : tel}</S.RowContent>
       </S.Row>
     </S.Overlay>
   );
