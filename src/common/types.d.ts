@@ -22,6 +22,7 @@ declare interface IdbState {
   isOpen: boolean;
 }
 
+
 declare interface ResultItemProps {
   info: {
     ESNTL_ID: number | string;
