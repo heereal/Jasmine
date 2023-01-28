@@ -25,45 +25,41 @@ export const BTNMoveToFindBookstore = styled.button`
 `;
 export const SectorIntroduceNewBookStore = styled.div`
   font-family: 'Pretendard-Regular';
-  width: 800x;
-  height: 400px;
+  max-width: 960px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
+  padding: 20px 0 50px 0;
 `;
 export const H1IntroduceNewBookStore = styled.div`
-  left: 0;
   margin-top: 20px;
-  margin-left: 30px;
-  margin-bottom: 30px;
-  position: absolute;
-  font-size: xx-large;
+  font-size: x-large;
   font-weight: 900;
+  padding: 0 30px;
 `;
 
 export const WrapperCardsIntroduceNewBookStore = styled.div`
   width: 100%;
-  height: 300px;
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
+  flex-wrap: wrap;
 `;
 export const CardIntroductNewBookStore = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
   height: 220px;
-  padding: 20px;
-  margin: 15px;
+  padding: 0 20px;
+  margin: 0 15px;
   cursor: pointer;
 `;
 export const H2IntroduceNewBookStore = styled.div`
-  font-size: x-large;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 200;
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
