@@ -1,10 +1,7 @@
 import * as S from './SubscribeOurLetter.styles';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { collection, addDoc } from 'firebase/firestore';
-import { Form } from 'react-router-dom';
 import { db } from '../../../firebase';
 import { useState } from 'react';
 

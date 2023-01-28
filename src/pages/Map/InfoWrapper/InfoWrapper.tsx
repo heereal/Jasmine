@@ -120,11 +120,6 @@ export default function InfoWrapper({ map }: any) {
 
     navigate('/map');
 
-    // const defaultLocation = new window.kakao.maps.LatLng(
-    //   37.566826,
-    //   126.9786567,
-    // );
-
     // 현재 중심 위치
     const currentCenter = new window.kakao.maps.LatLng(
       location.coordinates?.lat,

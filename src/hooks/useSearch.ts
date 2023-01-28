@@ -7,6 +7,7 @@ export const useSearch = (
   setSearch: any,
   openFilterEnum: any,
 ) => {
+  // 검색 form 제출 핸들링 함수
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -20,7 +21,9 @@ export const useSearch = (
       );
     }
 
-    if (currentCategory !== '카테고리 선택') {
+    if (currentCategory === '카테고리 전체') {
+      result = DBDefault;
+    } else {
       result = result.filter((item: any) =>
         item.MLSFC_NM.includes(currentCategory),
       );
@@ -43,15 +46,16 @@ export const useSearch = (
   };
 
   const [currentCategory, setCurrentCategory] =
-    useState<string>('카테고리 선택');
+    useState<string>('카테고리 전체');
 
   const [parking, setParking] = useState<boolean>(false);
   const [cafe, setCafe] = useState<boolean>(false);
   const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
 
+  // 검색 결과 초기화 핸들링 함수
   const handleResetResult = useCallback(() => {
     setDB(DBDefault);
-    setCurrentCategory('카테고리 선택');
+    setCurrentCategory('카테고리 전체');
     setCafe(false);
     setParking(false);
     setOpenFilter(2);

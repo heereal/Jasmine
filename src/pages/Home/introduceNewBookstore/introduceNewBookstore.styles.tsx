@@ -10,7 +10,7 @@ export const MoveToFindBookstore = styled.div`
 `;
 export const BTNMoveToFindBookstore = styled.button`
   width: 400px;
-  height: 80px;
+  height: 65px;
   background: linear-gradient(
     86.82deg,
     #406ab3 1.82%,
@@ -25,7 +25,7 @@ export const BTNMoveToFindBookstore = styled.button`
 `;
 export const SectorIntroduceNewBookStore = styled.div`
   font-family: 'Pretendard-Regular';
-  width: 100%;
+  width: 800x;
   height: 400px;
   display: flex;
   flex-direction: column;

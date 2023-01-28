@@ -10,7 +10,7 @@ export const handleIsOpen = (
   // 현재 시간, 현재 요일
   const { currentTime, day } = getCurrentTime();
 
-  // 토요일, 일요일인 경우
+  // 주말인 경우
   if (day === 0 || day === 7) {
     return currentTime >= weekendOpenTime && currentTime <= weekendCloseTime;
 

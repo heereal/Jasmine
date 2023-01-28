@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
 
 export const SectorSubscribeOurLetter = styled.div`
   font-family: 'Pretendard-Regular';
@@ -24,31 +25,38 @@ export const SubscribeInputBox = styled.div`
   align-items: center;
 `;
 export const InputSubscriberName = styled.input`
+  padding: 0 10px;
   margin-right: 10px;
   width: 250px;
   height: 40px;
+  font-size: 16px;
 `;
 export const InputSubscriberEmail = styled.input`
+  padding: 0 10px;
   margin-right: 10px;
   width: 250px;
   height: 40px;
-  ::placeholder {
-  }
+  font-size: 16px;
 `;
 export const BTNSubscribeSubmit = styled.button`
   width: 60px;
   height: 40px;
-  ::placeholder {
+  background-color: transparent;
+  font-size: 16px;
+  border: 1px solid ${BLACK_COLOR};
+  cursor: pointer;
+  :hover {
+    background-color: ${LIGHT_GRAY_COLOR};
   }
 `;
 
 export const SeeOurAgreement = styled.div`
-  text-align: center;
-  font-size: 8px;
+  margin: 10px 0 0 5px;
+  font-size: 13px;
 `;
 
 export const SmallCheckBox = styled.input`
-  width: 7px;
-  height: 7px;
+  width: 13px;
+  height: 13px;
   margin-left: 5px;
 `;
