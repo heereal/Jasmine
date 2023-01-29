@@ -46,7 +46,7 @@ const openStatus = [
 export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
   const { bookstoreId } = useParams();
-  
+
   // 현재 위치 가져오기
   const location = useGeolocation();
 
@@ -71,7 +71,7 @@ export default function InfoWrapper({ map }: any) {
   // 주차, 카페, 영업 상태 필터
 
   // 검색결과 데이터 끝 여부
-  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
+  const [, setIsEndOfData] = useState<boolean>(false);
   const [countOfData, setCountOfData] = useState<number>(10);
 
   //! 검색 form 제출 핸들링 함수
@@ -92,15 +92,9 @@ export default function InfoWrapper({ map }: any) {
   // 영업 상태 클릭 핸들링 함수
   const handleOpenStatusClick = useCallback(
     (idx: number) => {
-      // 같은 버튼 클릭 시 전체로 변경
-      if (openFilter === idx) {
-        setOpenFilter(openFilterEnum.ALL);
-        return;
-      }
-      // 다른 버튼 클릭 시 해당 버튼으로 변경
-      setOpenFilter(idx);
+      setOpenFilter(openFilterEnum.ALL);
     },
-    [openFilter],
+    [setOpenFilter],
   );
 
   // 더보기 버튼 클릭 핸들링 함수

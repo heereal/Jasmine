@@ -47,7 +47,7 @@ export default function Map() {
   useEffect(() => {
     makeMap();
     setDB(defaultDB);
-  }, [makeMap]);
+  }, [makeMap, defaultDB, setDB]);
 
   // * DB가 변경되면 마커 생성
   useEffect(() => {

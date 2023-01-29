@@ -58,7 +58,15 @@ export const useSearch = (
     setParking(false);
     setOpenFilter(2);
     setSearch('');
-  }, [setDB, setCurrentCategory, setCafe, setParking, setOpenFilter]);
+  }, [
+    setDB,
+    setCurrentCategory,
+    setCafe,
+    setParking,
+    setOpenFilter,
+    DBDefault,
+    setSearch,
+  ]);
 
   return {
     handleSubmit,
