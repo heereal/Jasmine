@@ -155,7 +155,7 @@ export default function InfoWrapper({ map }: any) {
 
       // 서점과 현재 위치의 거리
       const distance = poly.getLength();
-      if (distance <= 5000) {
+      if (distance <= 10000) {
         newDB.push(store);
       }
     });
@@ -168,7 +168,7 @@ export default function InfoWrapper({ map }: any) {
     // 현재 위치 반경 5km 표시
     const circle = new window.kakao.maps.Circle({
       center: currentCenter,
-      radius: 5000,
+      radius: 10000,
       strokeWeight: 1,
       strokeColor: BLUE_COLOR,
       strokeOpacity: 0.8,
