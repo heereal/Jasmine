@@ -3,7 +3,12 @@ import { useCallback, useState } from 'react';
 
 const { kakao } = window;
 
-export const useMap = (mapContainer: any, setMarkerImage: any, markerImage: any, DB: any) => {
+export const useMap = (
+  mapContainer: any,
+  setMarkerImage: any,
+  markerImage: any,
+  DB: any,
+) => {
   const navigate = useNavigate();
 
   // map 객체를 저장할 state
@@ -27,7 +32,7 @@ export const useMap = (mapContainer: any, setMarkerImage: any, markerImage: any,
 
     // 마커 이미지 생성
     const imageSrc = require('../assets/images/marker.png');
-    const imageSize = new kakao.maps.Size(28, 28);
+    const imageSize = new kakao.maps.Size(30, 30);
     setMarkerImage(new kakao.maps.MarkerImage(imageSrc, imageSize));
 
     setMap(newMap);

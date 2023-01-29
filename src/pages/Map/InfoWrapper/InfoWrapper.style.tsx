@@ -103,6 +103,11 @@ export const CategoryContainer = styled.div`
   position: relative;
 `;
 
+export const DownIcon = styled.div`
+  position: absolute;
+  right: 5px;
+`
+
 export const Category = styled.button`
   width: 100%;
   text-align: center;

@@ -25,7 +25,7 @@ import { BiX } from 'react-icons/bi';
 import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSearch } from '../../../hooks/useSearch';
 
 // 영업 상태 enum
@@ -45,6 +45,8 @@ const openStatus = [
 
 export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
+  const { bookstoreId } = useParams();
+  
   // 현재 위치 가져오기
   const location = useGeolocation();
 
@@ -119,11 +121,6 @@ export default function InfoWrapper({ map }: any) {
     if (!location || !map) return;
 
     navigate('/map');
-
-    // const defaultLocation = new window.kakao.maps.LatLng(
-    //   37.566826,
-    //   126.9786567,
-    // );
 
     // 현재 중심 위치
     const currentCenter = new window.kakao.maps.LatLng(
@@ -258,10 +255,10 @@ export default function InfoWrapper({ map }: any) {
       <S.SearchForm onSubmit={handleSubmit}>
         <S.SearchInput
           type="text"
-          placeholder="서점을 찾아보세요"
+          placeholder="서점을 찾아보세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          autoFocus
+          autoFocus={bookstoreId ? false : true}
         />
         <S.ResetButton onClick={handleResetResult}>
           <BiX />

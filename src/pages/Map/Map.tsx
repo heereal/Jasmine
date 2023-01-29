@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { useParams } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
-import { dbState } from '../../store/selectors';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { dbDefaultState, dbState } from '../../store/selectors';
 
 import * as S from './Map.style';
 
@@ -25,7 +25,8 @@ export default function Map() {
   const { bookstoreId } = useParams();
 
   // 전역 DB 불러오기
-  const DB = useRecoilValue<IdbState[]>(dbState);
+  const [DB, setDB] = useRecoilState<IdbState[]>(dbState);
+  const defaultDB = useRecoilValue<IdbState[]>(dbDefaultState);
 
   // 지도가 표시될 HTML element
   const mapContainer = useRef(null);
@@ -45,6 +46,7 @@ export default function Map() {
   // * 첫 렌더링 시 지도 생성
   useEffect(() => {
     makeMap();
+    setDB(defaultDB);
   }, [makeMap]);
 
   // * DB가 변경되면 마커 생성
