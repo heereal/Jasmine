@@ -255,7 +255,7 @@ export default function InfoWrapper({ map }: any) {
       <S.SearchForm onSubmit={handleSubmit}>
         <S.SearchInput
           type="text"
-          placeholder="서점을 찾아보세요"
+          placeholder="서점을 찾아보세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           autoFocus={bookstoreId ? false : true}

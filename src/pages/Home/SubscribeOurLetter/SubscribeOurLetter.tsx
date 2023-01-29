@@ -12,25 +12,32 @@ export default function SubscribeOurLetter() {
 
   // 구독자 추가 함수 // Trigger Email 이 포함되어 있음
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const subscriberRef = collection(db, 'subscriber');
-    const subscriber = {
-      to: subscriberEmail,
-      name: subscriberName,
-      submitTime: submitTime,
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-      message: {
-        subject: '[쟈스민 독립서점 소식지]를 구독해주셔서 감사합니다.',
-        text: '',
-        html: ' <img src ="https://user-images.githubusercontent.com/78587041/214996034-50d81353-fcc8-48da-8694-7dd2e04dfc40.png" alt ="Thank you for subscribing out Letter" width ="650px" height="1000px"> ',
-      },
-    };
+    if (subscriberEmail.match(emailRegex) === null) {
+      e.preventDefault();
+      alert('이메일을 형식에 맞게 입력해주세요.');
+    } else {
+      e.preventDefault();
+      const subscriberRef = collection(db, 'subscriber');
+      const subscriber = {
+        to: subscriberEmail,
+        name: subscriberName,
+        submitTime: submitTime,
 
-    await addDoc(subscriberRef, subscriber);
-    setSubscriberName('');
-    setSubscriberEmail('');
+        message: {
+          subject: '[쟈스민 독립서점 소식지]를 구독해주셔서 감사합니다.',
+          text: '',
+          html: ' <img src ="https://user-images.githubusercontent.com/78587041/214996034-50d81353-fcc8-48da-8694-7dd2e04dfc40.png" alt ="Thank you for subscribing out Letter" width ="650px" height="1000px"> ',
+        },
+      };
 
-    alert('구독이 완료되었습니다.');
+      await addDoc(subscriberRef, subscriber);
+      setSubscriberName('');
+      setSubscriberEmail('');
+
+      alert('구독이 완료되었습니다.');
+    }
   };
 
   return (
@@ -54,6 +61,7 @@ export default function SubscribeOurLetter() {
           />
           <S.BTNSubscribeSubmit
             type="submit"
+            disabled={subscriberName && subscriberEmail ? false : true}
             onClick={() => setSubmitTime(new Date().toLocaleString())}
           >
             구독
@@ -61,7 +69,7 @@ export default function SubscribeOurLetter() {
           <S.SeeOurAgreement>
             <p>
               개인정보 수집 및 이용에 대해 동의하십니까?{' '}
-              <a href="https://jasmin-bookstore.web.app/privacy">자세히 보기</a>
+              {/* <a href="https://jasmin-bookstore.web.app/privacy">자세히 보기</a> */}
               <S.SmallCheckBox type="checkbox" />
             </p>
           </S.SeeOurAgreement>

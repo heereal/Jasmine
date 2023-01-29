@@ -32,6 +32,7 @@ export const InputSubscriberName = styled.input`
 export const InputSubscriberEmail = styled.input`
   padding: 0 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
   width: 250px;
   height: 40px;
   font-size: 16px;
@@ -42,9 +43,16 @@ export const BTNSubscribeSubmit = styled.button`
   background-color: transparent;
   font-size: 16px;
   border: 1px solid ${BLACK_COLOR};
+  color: ${BLACK_COLOR};
   cursor: pointer;
   :hover {
     background-color: ${LIGHT_GRAY_COLOR};
+  }
+  :disabled {
+    cursor: default;
+    :hover {
+      background-color: transparent;
+    }
   }
 `;
 

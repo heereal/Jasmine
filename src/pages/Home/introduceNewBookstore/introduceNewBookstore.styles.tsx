@@ -22,6 +22,9 @@ export const BTNMoveToFindBookstore = styled.button`
   font-size: x-large;
   color: white;
   cursor: pointer;
+  @media only screen and (max-width: 450px) {
+    width: 90%;
+  }
 `;
 export const SectorIntroduceNewBookStore = styled.div`
   font-family: 'Pretendard-Regular';
