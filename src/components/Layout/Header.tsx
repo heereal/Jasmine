@@ -14,7 +14,7 @@ export default function Header() {
       />
       <S.Menus>
         <Menu to="/" label="홈" />
-        <Menu to="/map" label="서점찾기" />
+        <Menu to="/map" label="서점 찾기" />
       </S.Menus>
     </S.Container>
   );

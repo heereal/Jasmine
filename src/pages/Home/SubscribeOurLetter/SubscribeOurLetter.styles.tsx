@@ -3,7 +3,7 @@ import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
 
 export const SectorSubscribeOurLetter = styled.div`
   font-family: 'Pretendard-Regular';
-  height: 250px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   max-width: 960px;

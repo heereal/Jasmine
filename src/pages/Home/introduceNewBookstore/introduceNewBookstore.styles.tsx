@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MoveToFindBookstore = styled.div`
   font-family: 'Pretendard-Regular';
   width: 100%;
-  height: 150px;
+  height: 130px;
   display: flex;
   justify-content: center;
   align-items: center;

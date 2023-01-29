@@ -21,9 +21,7 @@ export const useSearch = (
       );
     }
 
-    if (currentCategory === '카테고리 전체') {
-      result = DBDefault;
-    } else {
+    if (currentCategory !== '카테고리 전체') {
       result = result.filter((item: any) =>
         item.MLSFC_NM.includes(currentCategory),
       );
