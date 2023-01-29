@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -27,21 +27,6 @@ import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSearch } from '../../../hooks/useSearch';
-
-// 영업 상태 enum
-enum openFilterEnum {
-  OPEN = 0,
-  CLOSE = 1,
-  ALL = 2,
-}
-
-// 영업 상태
-const openStatus = [
-  {
-    status: '영업중',
-    color: GREEN_COLOR,
-  },
-];
 
 export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
@@ -74,10 +59,9 @@ export default function InfoWrapper({ map }: any) {
   const [, setIsEndOfData] = useState<boolean>(false);
   const [countOfData, setCountOfData] = useState<number>(10);
 
-  //! 검색 form 제출 핸들링 함수
-
   const {
     handleSubmit,
+    handleSearch,
     handleResetResult,
     setCurrentCategory,
     setCafe,
@@ -87,15 +71,7 @@ export default function InfoWrapper({ map }: any) {
     currentCategory,
     cafe,
     parking,
-  } = useSearch(DBDefault, search, setDB, setSearch, openFilterEnum);
-
-  // 영업 상태 클릭 핸들링 함수
-  const handleOpenStatusClick = useCallback(
-    (idx: number) => {
-      setOpenFilter(openFilterEnum.ALL);
-    },
-    [setOpenFilter],
-  );
+  } = useSearch(DBDefault, search, setDB, setSearch);
 
   // 더보기 버튼 클릭 핸들링 함수
   const handleLoadMoreButtonClick = useCallback(() => {
@@ -183,6 +159,12 @@ export default function InfoWrapper({ map }: any) {
     setDB,
   ]);
 
+  // 필터 변경 시 검색
+  useEffect(() => {
+    handleSearch();
+    // eslint-disable-next-line
+  }, [currentCategory, cafe, parking, openFilter]);
+
   return (
     <S.Container>
       {/* 필터 */}
@@ -219,24 +201,19 @@ export default function InfoWrapper({ map }: any) {
           <IoCafeOutline />
           {/* 영업상태 */}
         </S.Filter>
-        {openStatus.map(({ status, color }, idx) => (
-          <S.Filter
-            width="33%"
-            key={idx}
-            onClick={() => handleOpenStatusClick(idx)}
-            backgroundColor={
-              openFilter === idx ? LIGHT_GRAY_COLOR : 'transparent'
-            }
-          >
-            <MdCircle
-              style={{
-                color: color,
-                marginRight: '0.2rem',
-              }}
-            />
-            <span>{status}</span>
-          </S.Filter>
-        ))}
+        <S.Filter
+          width="33%"
+          onClick={() => setOpenFilter(!openFilter)}
+          backgroundColor={openFilter ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
+          <MdCircle
+            style={{
+              color: GREEN_COLOR,
+              marginRight: '0.2rem',
+            }}
+          />
+          <span>영업중</span>
+        </S.Filter>
       </S.Filters>
       {/* 영업 상태 */}
 

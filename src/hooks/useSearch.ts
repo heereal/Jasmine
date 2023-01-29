@@ -5,12 +5,15 @@ export const useSearch = (
   search: any,
   setDB: any,
   setSearch: any,
-  openFilterEnum: any,
 ) => {
-  // 검색 form 제출 핸들링 함수
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [currentCategory, setCurrentCategory] =
+    useState<string>('카테고리 전체');
+  const [parking, setParking] = useState<boolean>(false);
+  const [cafe, setCafe] = useState<boolean>(false);
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
 
+  // 검색 핸들링 함수
+  const handleSearch = useCallback(() => {
     let result = DBDefault;
 
     if (search) {
@@ -35,20 +38,29 @@ export const useSearch = (
       result = result.filter((item: any) => item.ADIT_DC.includes('카페'));
     }
 
-    if (openFilter === 0) {
-      result = result.filter((item: any) => item.isOpen === true);
-    }
+    result = result.filter((item: any) => item.isOpen === openFilter);
 
     setDB(result);
     setSearch('');
-  };
+  }, [
+    openFilter,
+    DBDefault,
+    setDB,
+    search,
+    setSearch,
+    currentCategory,
+    parking,
+    cafe,
+  ]);
 
-  const [currentCategory, setCurrentCategory] =
-    useState<string>('카테고리 전체');
-
-  const [parking, setParking] = useState<boolean>(false);
-  const [cafe, setCafe] = useState<boolean>(false);
-  const [openFilter, setOpenFilter] = useState<number>(openFilterEnum.ALL);
+  // 검색 form 제출 핸들링 함수
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      handleSearch();
+    },
+    [handleSearch],
+  );
 
   // 검색 결과 초기화 핸들링 함수
   const handleResetResult = useCallback(() => {
@@ -56,7 +68,7 @@ export const useSearch = (
     setCurrentCategory('카테고리 전체');
     setCafe(false);
     setParking(false);
-    setOpenFilter(2);
+    setOpenFilter(false);
     setSearch('');
   }, [
     setDB,
@@ -70,6 +82,7 @@ export const useSearch = (
 
   return {
     handleSubmit,
+    handleSearch,
     handleResetResult,
     setCurrentCategory,
     setCafe,
