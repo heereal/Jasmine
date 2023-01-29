@@ -1,11 +1,6 @@
 import { FormEvent, useCallback, useState } from 'react';
 
-export const useSearch = (
-  DBDefault: any,
-  search: any,
-  setDB: any,
-  setSearch: any,
-) => {
+const useSearch = (DBDefault: any, search: any, setDB: any, setSearch: any) => {
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 전체');
   const [parking, setParking] = useState<boolean>(false);
@@ -94,3 +89,5 @@ export const useSearch = (
     cafe,
   };
 };
+
+export default useSearch;

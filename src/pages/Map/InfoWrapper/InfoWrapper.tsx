@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   currentLocationState,
   dbDefaultState,
@@ -14,8 +14,6 @@ import {
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
 
-import useGeolocation from '../../../hooks/useGeolocation';
-
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
@@ -26,7 +24,7 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSearch } from '../../../hooks/useSearch';
+import { useGeolocation, useSearch } from '../../../hooks';
 
 export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
@@ -36,8 +34,7 @@ export default function InfoWrapper({ map }: any) {
   const location = useGeolocation();
 
   // 현재 위치 전역 상태
-  const [currentLocation, setCurrentLocation] =
-    useRecoilState(currentLocationState);
+  const setCurrentLocation = useSetRecoilState(currentLocationState);
   // 현재 표시되는 반경
   const [currentCircle, setCurrentCircle] = useState<any>(null);
 
@@ -97,9 +94,6 @@ export default function InfoWrapper({ map }: any) {
       location.coordinates?.lat,
       location.coordinates?.lng,
     );
-
-    // 이전 위치와 같으면 return
-    if (currentLocation === location) return;
 
     // 현재 위치 전역 상태 저장
     setCurrentLocation(location);

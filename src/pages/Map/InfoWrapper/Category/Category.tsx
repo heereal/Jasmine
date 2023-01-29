@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../../common/colors';
 import { categories } from '../../../../common/data';
-import { useCategory } from '../../../../hooks/useCategory';
+import { useCategory } from '../../../../hooks';
+
 import * as S from './Category.style';
 
 interface CategoryProps {
@@ -17,7 +18,6 @@ export default function Category({
 }: CategoryProps) {
   // 카테고리 클릭 핸들링 함수
   const { handleCategoryClick } = useCategory(
-    currentCategory,
     setCurrentCategory,
     setOpenCategory,
   );
