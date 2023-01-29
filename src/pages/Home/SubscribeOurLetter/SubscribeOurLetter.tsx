@@ -66,13 +66,6 @@ export default function SubscribeOurLetter() {
           >
             구독
           </S.BTNSubscribeSubmit>
-          <S.SeeOurAgreement>
-            <p>
-              개인정보 수집 및 이용에 대해 동의하십니까?{' '}
-              {/* <a href="https://jasmin-bookstore.web.app/privacy">자세히 보기</a> */}
-              <S.SmallCheckBox type="checkbox" />
-            </p>
-          </S.SeeOurAgreement>
         </form>
       </S.SubscribeInputBox>
     </S.SectorSubscribeOurLetter>
