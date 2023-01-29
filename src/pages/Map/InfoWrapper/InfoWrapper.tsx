@@ -54,7 +54,10 @@ export default function InfoWrapper({ map }: any) {
 
   // 검색결과 데이터 끝 여부
   const [, setIsEndOfData] = useState<boolean>(false);
-  const [countOfData, setCountOfData] = useState<number>(10);
+
+  // 더보기 버튼 클릭 시 로드할 데이터 개수
+  const loadCount = 20;
+  const [countOfData, setCountOfData] = useState<number>(loadCount);
 
   const {
     handleSubmit,
@@ -72,12 +75,12 @@ export default function InfoWrapper({ map }: any) {
 
   // 더보기 버튼 클릭 핸들링 함수
   const handleLoadMoreButtonClick = useCallback(() => {
-    if (countOfData + 10 >= DB.length) {
+    if (countOfData + loadCount >= DB.length) {
       setCountOfData(DB.length);
       setIsEndOfData(true);
       return;
     }
-    setCountOfData(countOfData + 10);
+    setCountOfData(countOfData + loadCount);
   }, [countOfData, DB.length]);
 
   //! 검색 결과 초기화 핸들링 함수
