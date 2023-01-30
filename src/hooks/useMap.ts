@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 const { kakao } = window;
 
-export const useMap = (
+const useMap = (
   mapContainer: any,
   setMarkerImage: any,
   markerImage: any,
@@ -75,3 +75,5 @@ export const useMap = (
 
   return { makeMap, makeMarkers, map };
 };
+
+export default useMap;

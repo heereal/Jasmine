@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import {
   BLACK_COLOR,
-  BLUE_COLOR,
   LIGHT_GRAY_COLOR,
   PINK_COLOR,
-  YELLOW_COLOR,
   DARK_GRAY_COLOR,
 } from '../../../common/colors';
-import { PAGE_HEIGHT } from '../../../common/layout';
 
 export const Container = styled.div`
   font-family: 'Pretendard-Regular';
   padding: 1rem;
-  height: ${PAGE_HEIGHT};
   width: 40%;
   min-width: 300px;
   max-width: 500px;
@@ -106,7 +102,7 @@ export const CategoryContainer = styled.div`
 export const DownIcon = styled.div`
   position: absolute;
   right: 5px;
-`
+`;
 
 export const Category = styled.button`
   width: 100%;

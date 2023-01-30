@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   currentLocationState,
   dbDefaultState,
@@ -14,8 +14,6 @@ import {
   LIGHT_GRAY_COLOR,
 } from '../../../common/colors';
 
-import useGeolocation from '../../../hooks/useGeolocation';
-
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
 import { MdCircle } from 'react-icons/md';
@@ -26,33 +24,17 @@ import * as S from './InfoWrapper.style';
 import ResultItem from './ResultItem/ResultItem';
 import Category from './Category/Category';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSearch } from '../../../hooks/useSearch';
-
-// 영업 상태 enum
-enum openFilterEnum {
-  OPEN = 0,
-  CLOSE = 1,
-  ALL = 2,
-}
-
-// 영업 상태
-const openStatus = [
-  {
-    status: '영업중',
-    color: GREEN_COLOR,
-  },
-];
+import { useGeolocation, useSearch } from '../../../hooks';
 
 export default function InfoWrapper({ map }: any) {
   const navigate = useNavigate();
   const { bookstoreId } = useParams();
-  
+
   // 현재 위치 가져오기
   const location = useGeolocation();
 
   // 현재 위치 전역 상태
-  const [currentLocation, setCurrentLocation] =
-    useRecoilState(currentLocationState);
+  const setCurrentLocation = useSetRecoilState(currentLocationState);
   // 현재 표시되는 반경
   const [currentCircle, setCurrentCircle] = useState<any>(null);
 
@@ -71,13 +53,15 @@ export default function InfoWrapper({ map }: any) {
   // 주차, 카페, 영업 상태 필터
 
   // 검색결과 데이터 끝 여부
-  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
-  const [countOfData, setCountOfData] = useState<number>(10);
+  const [, setIsEndOfData] = useState<boolean>(false);
 
-  //! 검색 form 제출 핸들링 함수
+  // 더보기 버튼 클릭 시 로드할 데이터 개수
+  const loadCount = 20;
+  const [countOfData, setCountOfData] = useState<number>(loadCount);
 
   const {
     handleSubmit,
+    handleSearch,
     handleResetResult,
     setCurrentCategory,
     setCafe,
@@ -87,30 +71,16 @@ export default function InfoWrapper({ map }: any) {
     currentCategory,
     cafe,
     parking,
-  } = useSearch(DBDefault, search, setDB, setSearch, openFilterEnum);
-
-  // 영업 상태 클릭 핸들링 함수
-  const handleOpenStatusClick = useCallback(
-    (idx: number) => {
-      // 같은 버튼 클릭 시 전체로 변경
-      if (openFilter === idx) {
-        setOpenFilter(openFilterEnum.ALL);
-        return;
-      }
-      // 다른 버튼 클릭 시 해당 버튼으로 변경
-      setOpenFilter(idx);
-    },
-    [openFilter],
-  );
+  } = useSearch(DBDefault, search, setDB, setSearch);
 
   // 더보기 버튼 클릭 핸들링 함수
   const handleLoadMoreButtonClick = useCallback(() => {
-    if (countOfData + 10 >= DB.length) {
+    if (countOfData + loadCount >= DB.length) {
       setCountOfData(DB.length);
       setIsEndOfData(true);
       return;
     }
-    setCountOfData(countOfData + 10);
+    setCountOfData(countOfData + loadCount);
   }, [countOfData, DB.length]);
 
   //! 검색 결과 초기화 핸들링 함수
@@ -127,9 +97,6 @@ export default function InfoWrapper({ map }: any) {
       location.coordinates?.lat,
       location.coordinates?.lng,
     );
-
-    // 이전 위치와 같으면 return
-    if (currentLocation === location) return;
 
     // 현재 위치 전역 상태 저장
     setCurrentLocation(location);
@@ -155,7 +122,7 @@ export default function InfoWrapper({ map }: any) {
 
       // 서점과 현재 위치의 거리
       const distance = poly.getLength();
-      if (distance <= 5000) {
+      if (distance <= 10000) {
         newDB.push(store);
       }
     });
@@ -168,7 +135,7 @@ export default function InfoWrapper({ map }: any) {
     // 현재 위치 반경 5km 표시
     const circle = new window.kakao.maps.Circle({
       center: currentCenter,
-      radius: 5000,
+      radius: 10000,
       strokeWeight: 1,
       strokeColor: BLUE_COLOR,
       strokeOpacity: 0.8,
@@ -188,6 +155,12 @@ export default function InfoWrapper({ map }: any) {
     handleResetResult,
     setDB,
   ]);
+
+  // 필터 변경 시 검색
+  useEffect(() => {
+    handleSearch();
+    // eslint-disable-next-line
+  }, [currentCategory, cafe, parking, openFilter]);
 
   return (
     <S.Container>
@@ -225,24 +198,19 @@ export default function InfoWrapper({ map }: any) {
           <IoCafeOutline />
           {/* 영업상태 */}
         </S.Filter>
-        {openStatus.map(({ status, color }, idx) => (
-          <S.Filter
-            width="33%"
-            key={idx}
-            onClick={() => handleOpenStatusClick(idx)}
-            backgroundColor={
-              openFilter === idx ? LIGHT_GRAY_COLOR : 'transparent'
-            }
-          >
-            <MdCircle
-              style={{
-                color: color,
-                marginRight: '0.2rem',
-              }}
-            />
-            <span>{status}</span>
-          </S.Filter>
-        ))}
+        <S.Filter
+          width="33%"
+          onClick={() => setOpenFilter(!openFilter)}
+          backgroundColor={openFilter ? LIGHT_GRAY_COLOR : 'transparent'}
+        >
+          <MdCircle
+            style={{
+              color: GREEN_COLOR,
+              marginRight: '0.2rem',
+            }}
+          />
+          <span>영업중</span>
+        </S.Filter>
       </S.Filters>
       {/* 영업 상태 */}
 
