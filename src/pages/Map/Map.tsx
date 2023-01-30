@@ -97,7 +97,7 @@ export default function Map() {
   useEffect(() => {
     moveMap(bookstoreId);
     // eslint-disable-next-line
-  }, [bookstoreId]);
+  }, [bookstoreId, map]);
 
   return (
     <S.Container>
