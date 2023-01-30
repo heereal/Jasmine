@@ -15,9 +15,6 @@ export const Container = styled.div`
   overflow-y: auto;
   @media screen and (max-width: 768px) {
     width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    overflow-y: hidden;
   }
 `;
 

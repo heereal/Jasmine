@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: calc(100vh - ${HEADER_HEIGHT});
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%;
   }
 `;
 
@@ -18,6 +18,6 @@ export const MapContainer = styled.div`
   background-color: ${LIGHT_GRAY_COLOR};
   @media screen and (max-width: 768px) {
     width: 100%;
-    height: 500px;
+    height: 600px;
   }
 `;
