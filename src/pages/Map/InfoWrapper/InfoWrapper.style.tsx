@@ -39,6 +39,7 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchButton = styled.input`
+  color: ${BLACK_COLOR};
   border: none;
   outline: none;
   font-size: 0.9rem;
@@ -47,6 +48,9 @@ export const SearchButton = styled.input`
   right: 0;
   padding-right: 1rem;
   cursor: pointer;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
 
 export const ResetButton = styled.div`
@@ -57,6 +61,9 @@ export const ResetButton = styled.div`
   padding-top: 0.2rem;
   margin-right: 30px;
   cursor: pointer;
+  &:hover {
+    color: ${PINK_COLOR};
+  }
 `;
 
 export const Filters = styled.div`
