@@ -53,7 +53,7 @@ export default function InfoWrapper({ map }: any) {
   // 주차, 카페, 영업 상태 필터
 
   // 검색결과 데이터 끝 여부
-  const [, setIsEndOfData] = useState<boolean>(false);
+  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
 
   // 더보기 버튼 클릭 시 로드할 데이터 개수
   const loadCount = 20;
@@ -249,11 +249,11 @@ export default function InfoWrapper({ map }: any) {
           })}
         </S.ResultItemContainer>
         {/* 더보기 버튼 */}
-        {DB.length > 19 ? (
+        {isEndOfData || (
           <S.LoadMoreButton onClick={handleLoadMoreButtonClick}>
             더보기
           </S.LoadMoreButton>
-        ) : null}
+        )}
       </S.SearchResultContainer>
     </S.Container>
   );
