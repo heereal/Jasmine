@@ -43,30 +43,28 @@ export default function SubscribeOurLetter() {
   return (
     <S.SectorSubscribeOurLetter>
       <S.H1SubscribeOurLetter>소식지를 구독하세요.</S.H1SubscribeOurLetter>
-      <S.SubscribeInputBox>
-        <form onSubmit={handleSubmit}>
-          <S.InputSubscriberName
-            type={'text'}
-            name={'subscriberName'}
-            value={subscriberName}
-            placeholder="이름"
-            onChange={(e) => setSubscriberName(e.currentTarget.value)}
-          />
-          <S.InputSubscriberEmail
-            type={'text'}
-            name={'subscriberEmail'}
-            value={subscriberEmail}
-            placeholder="이메일"
-            onChange={(e) => setSubscriberEmail(e.currentTarget.value)}
-          />
-          <S.BTNSubscribeSubmit
-            type="submit"
-            disabled={subscriberName && subscriberEmail ? false : true}
-            onClick={() => setSubmitTime(new Date().toLocaleString())}
-          >
-            구독
-          </S.BTNSubscribeSubmit>
-        </form>
+      <S.SubscribeInputBox onSubmit={handleSubmit}>
+        <S.InputSubscriberName
+          type={'text'}
+          name={'subscriberName'}
+          value={subscriberName}
+          placeholder="이름"
+          onChange={(e) => setSubscriberName(e.currentTarget.value)}
+        />
+        <S.InputSubscriberEmail
+          type={'text'}
+          name={'subscriberEmail'}
+          value={subscriberEmail}
+          placeholder="이메일"
+          onChange={(e) => setSubscriberEmail(e.currentTarget.value)}
+        />
+        <S.BTNSubscribeSubmit
+          type="submit"
+          disabled={subscriberName && subscriberEmail ? false : true}
+          onClick={() => setSubmitTime(new Date().toLocaleString())}
+        >
+          구독
+        </S.BTNSubscribeSubmit>
       </S.SubscribeInputBox>
     </S.SectorSubscribeOurLetter>
   );

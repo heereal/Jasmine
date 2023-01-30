@@ -14,13 +14,16 @@ export const H1SubscribeOurLetter = styled.div`
   font-size: x-large;
   padding: 0 30px 20px;
 `;
-export const SubscribeInputBox = styled.div`
+export const SubscribeInputBox = styled.form`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 0 30px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 export const InputSubscriberName = styled.input`
   padding: 0 10px;
@@ -28,6 +31,9 @@ export const InputSubscriberName = styled.input`
   width: 250px;
   height: 40px;
   font-size: 16px;
+  @media screen and (max-width: 768px) {
+    width: 60%;
+  }
 `;
 export const InputSubscriberEmail = styled.input`
   padding: 0 10px;
@@ -36,14 +42,18 @@ export const InputSubscriberEmail = styled.input`
   width: 250px;
   height: 40px;
   font-size: 16px;
+  @media screen and (max-width: 768px) {
+    width: 60%;
+  }
 `;
 export const BTNSubscribeSubmit = styled.button`
   width: 60px;
   height: 40px;
   background-color: transparent;
-  font-size: 16px;
+  font-size: 14px;
   border: 1px solid ${BLACK_COLOR};
   color: ${BLACK_COLOR};
+  margin-bottom: 10px;
   cursor: pointer;
   :hover {
     background-color: ${LIGHT_GRAY_COLOR};
