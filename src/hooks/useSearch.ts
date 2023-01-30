@@ -13,27 +13,29 @@ const useSearch = (DBDefault: any, search: any, setDB: any, setSearch: any) => {
 
     if (search) {
       result = result.filter(
-        (item: any) =>
+        (item: IdbState) =>
           item.FCLTY_NM.includes(search) ||
           item.FCLTY_ROAD_NM_ADDR.includes(search),
       );
     }
 
     if (currentCategory !== '카테고리 전체') {
-      result = result.filter((item: any) =>
+      result = result.filter((item: IdbState) =>
         item.MLSFC_NM.includes(currentCategory),
       );
     }
 
     if (parking) {
-      result = result.filter((item: any) => item.ADIT_DC.includes('주차'));
+      result = result.filter((item: IdbState) => item.ADIT_DC.includes('주차'));
     }
 
     if (cafe) {
-      result = result.filter((item: any) => item.ADIT_DC.includes('카페'));
+      result = result.filter((item: IdbState) => item.ADIT_DC.includes('카페'));
     }
 
-    result = result.filter((item: any) => item.isOpen === openFilter);
+    if (openFilter === true) {
+      result = result.filter((item: IdbState) => item.isOpen === true);
+    }
 
     setDB(result);
     setSearch('');
