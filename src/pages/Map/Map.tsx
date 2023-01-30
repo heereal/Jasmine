@@ -79,8 +79,7 @@ export default function Map() {
         }
       });
     },
-    // eslint-disable-next-line
-    [DB, map],
+    [DB, map, currentOverlayStoreId],
   );
 
   // * 첫 렌더링 시 지도 생성
@@ -97,7 +96,8 @@ export default function Map() {
   // * bookstoreId가 변경되면 지도 이동
   useEffect(() => {
     moveMap(bookstoreId);
-  }, [bookstoreId, moveMap]);
+    // eslint-disable-next-line
+  }, [bookstoreId]);
 
   return (
     <S.Container>

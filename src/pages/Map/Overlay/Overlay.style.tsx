@@ -11,6 +11,9 @@ export const Overlay = styled.div`
   padding: 1rem;
   border: 1px solid ${BLACK_COLOR};
   border-radius: 0.5rem;
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+  }
 `;
 
 export const NameRow = styled.div`
@@ -18,6 +21,9 @@ export const NameRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 1rem;
+  @media screen and (max-width: 768px) {
+    padding-bottom: 0.4rem;
+  }
 `;
 
 export const Name = styled.span`
@@ -51,6 +57,9 @@ export const Description = styled.div`
   font-size: 0.9rem;
   color: ${BLACK_COLOR};
   margin-bottom: 1rem;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0.4rem;
+  }
 `;
 
 export const Row = styled.div`
@@ -59,6 +68,9 @@ export const Row = styled.div`
   flex-direction: row;
   margin-bottom: 0.8rem;
   line-height: 1.3;
+  @media screen and (max-width: 768px) {
+    margin-bottom: 0.4rem;
+  }
   &:last-child {
     margin-bottom: 0;
   }

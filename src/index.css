@@ -159,3 +159,7 @@ table {
   box-sizing: border-box;
   font-family: 'Pretendard-Regular';
 }
+
+button {
+  color: black;
+}
