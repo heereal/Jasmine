@@ -107,7 +107,7 @@ export default function InfoWrapper({ map }: any) {
     // 필터 초기화 (전체 검색 결과에서 위치 표시)
     handleResetResult();
 
-    // 중심에서 5km 반경 내의 데이터 필터링 후 DB에 저장
+    // 중심에서 10km 반경 내의 데이터 필터링 후 DB에 저장
     const newDB: any[] = [];
     data.forEach((store) => {
       // 서점의 위치
@@ -129,7 +129,7 @@ export default function InfoWrapper({ map }: any) {
     setDB(newDB);
 
     // 현재 위치로 지도 이동
-    map.setLevel(7);
+    map.setLevel(8);
     map.panTo(currentCenter);
 
     // 현재 위치 반경 5km 표시
