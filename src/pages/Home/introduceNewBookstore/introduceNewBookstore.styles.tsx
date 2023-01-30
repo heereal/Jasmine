@@ -22,6 +22,15 @@ export const BTNMoveToFindBookstore = styled.button`
   font-size: x-large;
   color: white;
   cursor: pointer;
+  &:hover {
+    background: linear-gradient(
+      86.82deg,
+      #406ab3 1.82%,
+      #ee3897 51.06%,
+      #fcaf17 101.85%
+    );
+    opacity: 0.8;
+  }
   @media only screen and (max-width: 450px) {
     width: 90%;
   }
@@ -73,4 +82,7 @@ export const IMGIntroduceNewBookStore = styled.img`
   border-radius: 0.3rem;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
