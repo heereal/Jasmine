@@ -60,7 +60,11 @@ export default function Map() {
             store.FCLTY_LA,
             store.FCLTY_LO,
           );
-          map.setLevel(6); // 지도 확대 레벨 설정
+
+          // 지도 확대 레벨 설정
+          if (map.getLevel() > 8) {
+            map.setLevel(8);
+          }
           map.panTo(moveLatLon); // 지도 중심 좌표 이동
 
           // 커스텀 오버레이 생성
@@ -97,7 +101,7 @@ export default function Map() {
   useEffect(() => {
     moveMap(bookstoreId);
     // eslint-disable-next-line
-  }, [bookstoreId]);
+  }, [bookstoreId, map]);
 
   return (
     <S.Container>

@@ -19,8 +19,8 @@ const useMap = (
   const makeMap = useCallback(() => {
     // 지도를 생성할 때 필요한 기본 옵션
     let options = {
-      center: new kakao.maps.LatLng(37.56839464, 126.9303023), // 지도의 중심 좌표
-      level: 10, // 지도의 확대 수준
+      center: new kakao.maps.LatLng(36.38, 127.51), // 지도의 중심 좌표
+      level: 13, // 지도의 확대 수준
     };
 
     // 지도를 표시할 div와 지도 옵션으로 지도를 생성함
