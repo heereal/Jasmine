@@ -48,6 +48,7 @@ const useMap = (
     }
 
     // 마커 표시하기
+
     const newMarkers: any[] = [];
     DB.forEach((store: IdbState) => {
       const marker = new kakao.maps.Marker({

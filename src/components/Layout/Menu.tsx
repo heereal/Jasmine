@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { BLACK_COLOR } from '../../common/colors';
+import colors from '../../common/colors';
 
 interface MenuProps {
   to: string;
@@ -25,7 +25,7 @@ export default function Menu({ to, label }: MenuProps) {
 }
 
 const style = {
-  color: BLACK_COLOR,
+  color: colors.BLACK,
   textDecoration: 'none',
   marginRight: '20px',
   padding: '0 4px 2px 4px',

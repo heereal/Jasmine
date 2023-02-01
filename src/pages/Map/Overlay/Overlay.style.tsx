@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, PINK_COLOR, WHITE_COLOR } from '../../../common/colors';
+import colors from '../../../common/colors';
 
 export const Overlay = styled.div`
   position: absolute;
-  background-color: ${WHITE_COLOR};
+  background-color: ${colors.WHITE};
   opacity: 0.9;
   z-index: 3;
   width: 400px;
   transform: translate(-50%, -115%);
   padding: 1rem;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
   border-radius: 0.5rem;
   @media screen and (max-width: 768px) {
     width: 90vw;
@@ -30,7 +30,7 @@ export const Name = styled.span`
   margin-right: 0.5rem;
   transition: 80ms ease-in-out;
   &:hover {
-    color: ${PINK_COLOR};
+    color: ${colors.PINK};
   }
 `;
 
@@ -43,7 +43,7 @@ export const IconsContainer = styled.div`
 export const Category = styled.div`
   font-size: 0.9rem;
   border-radius: 6px;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
   padding: 0.2rem 0.5rem;
 `;
 
@@ -55,7 +55,7 @@ export const Address = styled.div`
 export const Description = styled.div`
   white-space: pre-wrap;
   font-size: 0.9rem;
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
   margin-bottom: 1rem;
   @media screen and (max-width: 768px) {
     margin-bottom: 0.4rem;
@@ -77,7 +77,7 @@ export const Row = styled.div`
 `;
 
 export const RowHeader = styled.div`
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
   min-width: 70px;
   margin-right: 1rem;
 `;
@@ -85,5 +85,5 @@ export const RowHeader = styled.div`
 export const RowContent = styled.div`
   white-space: pre-wrap;
   font-size: 0.9rem;
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
 `;

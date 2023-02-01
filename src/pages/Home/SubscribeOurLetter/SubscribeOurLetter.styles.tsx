@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../common/colors';
+import colors from '../../../common/colors';
 
 export const SectorSubscribeOurLetter = styled.div`
   font-family: 'Pretendard-Regular';
@@ -51,12 +51,12 @@ export const BTNSubscribeSubmit = styled.button`
   height: 40px;
   background-color: transparent;
   font-size: 14px;
-  border: 1px solid ${BLACK_COLOR};
-  color: ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
+  color: ${colors.BLACK};
   margin-bottom: 10px;
   cursor: pointer;
   :hover {
-    background-color: ${LIGHT_GRAY_COLOR};
+    background-color: ${colors.LIGHT_GRAY};
   }
   :disabled {
     cursor: default;
