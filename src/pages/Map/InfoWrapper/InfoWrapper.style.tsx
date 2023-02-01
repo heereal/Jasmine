@@ -1,10 +1,5 @@
 import styled from 'styled-components';
-import {
-  BLACK_COLOR,
-  LIGHT_GRAY_COLOR,
-  PINK_COLOR,
-  DARK_GRAY_COLOR,
-} from '../../../common/colors';
+import colors from '../../../common/colors';
 
 export const Container = styled.div`
   font-family: 'Pretendard-Regular';
@@ -30,7 +25,7 @@ export const SearchForm = styled.form`
 
 export const SearchInput = styled.input`
   width: 100%;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
   outline: none;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
@@ -38,7 +33,7 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchButton = styled.input`
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
   border: none;
   outline: none;
   font-size: 0.9rem;
@@ -48,7 +43,7 @@ export const SearchButton = styled.input`
   padding-right: 1rem;
   cursor: pointer;
   &:hover {
-    color: ${PINK_COLOR};
+    color: ${colors.PINK};
   }
 `;
 
@@ -61,7 +56,7 @@ export const ResetButton = styled.div`
   margin-right: 30px;
   cursor: pointer;
   &:hover {
-    color: ${PINK_COLOR};
+    color: ${colors.PINK};
   }
 `;
 
@@ -85,7 +80,7 @@ export const Filter = styled.button`
     props.backgroundColor || 'transparent'};
   width: ${(props: FilterProps) => props.width};
   text-align: center;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
   border-radius: 5px;
   font-size: 0.9rem;
   padding: 0.5rem 0;
@@ -95,7 +90,7 @@ export const Filter = styled.button`
     margin-right: 0;
   }
   &:hover {
-    background-color: ${LIGHT_GRAY_COLOR};
+    background-color: ${colors.LIGHT_GRAY};
   }
 `;
 
@@ -113,7 +108,7 @@ export const DownIcon = styled.div`
 export const Category = styled.button`
   width: 100%;
   text-align: center;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
   border-radius: 5px;
   outline: none;
   font-size: 0.9rem;
@@ -121,7 +116,7 @@ export const Category = styled.button`
   background-color: transparent;
   cursor: pointer;
   &:hover {
-    background-color: ${LIGHT_GRAY_COLOR};
+    background-color: ${colors.LIGHT_GRAY};
   }
 `;
 
@@ -145,7 +140,7 @@ export const SearchCurrentLocation = styled.button`
   cursor: pointer;
   transition: 80ms ease-in-out;
   &:hover {
-    color: ${PINK_COLOR};
+    color: ${colors.PINK};
   }
 `;
 
@@ -160,8 +155,8 @@ export const SearchResultContainer = styled.div`
 export const Summary = styled.div`
   width: 100%;
   font-size: 0.8rem;
-  color: ${DARK_GRAY_COLOR};
-  border-bottom: 1px solid ${BLACK_COLOR};
+  color: ${colors.DARK_GRAY};
+  border-bottom: 1px solid ${colors.BLACK};
   padding-bottom: 0.5rem;
 `;
 
@@ -173,24 +168,24 @@ export const ResultItemContainer = styled.div`
 export const LoadMoreButton = styled.button`
   height: 2rem;
   border: none;
-  border-bottom: 1px solid ${BLACK_COLOR};
+  border-bottom: 1px solid ${colors.BLACK};
   background-color: transparent;
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
   font-size: 1rem;
   cursor: pointer;
   padding: 0 0.5rem;
   margin-bottom: 1rem;
   transition: 80ms ease-in-out;
   &:hover {
-    color: ${PINK_COLOR};
+    color: ${colors.PINK};
   }
 `;
 
 export const NoResultBox = styled.div`
   font-size: 0.9rem;
-  color: ${PINK_COLOR};
+  color: ${colors.PINK};
   text-align: center;
   margin-top: 40px;
   padding: 15px;
-  border: 1px solid ${BLACK_COLOR};
+  border: 1px solid ${colors.BLACK};
 `;

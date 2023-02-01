@@ -1,11 +1,12 @@
-export const BLACK_COLOR = '#2C2C2C';
-export const WHITE_COLOR = '#FFFFFF';
+const colors = {
+  BLACK: '#2C2C2C',
+  WHITE: '#FFFFFF',
+  BLUE: '#406AB3',
+  PINK: '#EE3897',
+  YELLOW: '#FCAF17',
+  GREEN: '#76BC70',
+  LIGHT_GRAY: '#D1D1D1',
+  DARK_GRAY: '#A9A9A9',
+};
 
-export const BLUE_COLOR = '#406AB3';
-export const PINK_COLOR = '#EE3897';
-export const YELLOW_COLOR = '#FCAF17';
-
-export const GREEN_COLOR = '#76BC70';
-
-export const LIGHT_GRAY_COLOR = '#D1D1D1';
-export const DARK_GRAY_COLOR = '#A9A9A9';
+export default colors;

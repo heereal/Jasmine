@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { LIGHT_GRAY_COLOR } from '../../common/colors';
+import colors from '../../common/colors';
 import { HEADER_HEIGHT } from '../../common/layout';
 
 export const Container = styled.div`
@@ -15,7 +15,7 @@ export const Container = styled.div`
 export const MapContainer = styled.div`
   font-family: 'Pretendard-Regular';
   flex: 1 1 auto;
-  background-color: ${LIGHT_GRAY_COLOR};
+  background-color: ${colors.LIGHT_GRAY};
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 600px;

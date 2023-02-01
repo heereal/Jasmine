@@ -8,11 +8,7 @@ import {
 } from '../../../store/selectors';
 
 import { data } from '../../../bookstore';
-import {
-  BLUE_COLOR,
-  GREEN_COLOR,
-  LIGHT_GRAY_COLOR,
-} from '../../../common/colors';
+import colors from '../../../common/colors';
 
 import { FaParking } from 'react-icons/fa';
 import { IoCafeOutline } from 'react-icons/io5';
@@ -137,9 +133,9 @@ export default function InfoWrapper({ map }: any) {
       center: currentCenter,
       radius: 10000,
       strokeWeight: 1,
-      strokeColor: BLUE_COLOR,
+      strokeColor: colors.BLUE,
       strokeOpacity: 0.8,
-      fillColor: BLUE_COLOR,
+      fillColor: colors.BLUE,
       fillOpacity: 0.2,
     });
     circle.setMap(map);
@@ -185,7 +181,7 @@ export default function InfoWrapper({ map }: any) {
         <S.Filter
           width="20%"
           onClick={() => setParking(!parking)}
-          backgroundColor={parking ? LIGHT_GRAY_COLOR : 'transparent'}
+          backgroundColor={parking ? colors.LIGHT_GRAY : 'transparent'}
         >
           <FaParking />
         </S.Filter>
@@ -193,7 +189,7 @@ export default function InfoWrapper({ map }: any) {
         <S.Filter
           width="20%"
           onClick={() => setCafe(!cafe)}
-          backgroundColor={cafe ? LIGHT_GRAY_COLOR : 'transparent'}
+          backgroundColor={cafe ? colors.LIGHT_GRAY : 'transparent'}
         >
           <IoCafeOutline />
           {/* 영업상태 */}
@@ -201,11 +197,11 @@ export default function InfoWrapper({ map }: any) {
         <S.Filter
           width="33%"
           onClick={() => setOpenFilter(!openFilter)}
-          backgroundColor={openFilter ? LIGHT_GRAY_COLOR : 'transparent'}
+          backgroundColor={openFilter ? colors.LIGHT_GRAY : 'transparent'}
         >
           <MdCircle
             style={{
-              color: GREEN_COLOR,
+              color: colors.GREEN,
               marginRight: '0.2rem',
             }}
           />
