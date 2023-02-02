@@ -186,7 +186,7 @@ export default function InfoWrapper({ map }: any) {
             setFilterOptions({ ...filterOptions, parking: !parking })
           }
           backgroundColor={
-            filterOptions.parking ? LIGHT_GRAY_COLOR : 'transparent'
+            filterOptions.parking ? colors.LIGHT_GRAY : 'transparent'
           }
         >
           <FaParking />
@@ -196,7 +196,7 @@ export default function InfoWrapper({ map }: any) {
           width="20%"
           onClick={() => setFilterOptions({ ...filterOptions, cafe: !cafe })}
           backgroundColor={
-            filterOptions.cafe ? LIGHT_GRAY_COLOR : 'transparent'
+            filterOptions.cafe ? colors.LIGHT_GRAY : 'transparent'
           }
         >
           <IoCafeOutline />
@@ -208,7 +208,7 @@ export default function InfoWrapper({ map }: any) {
             setFilterOptions({ ...filterOptions, openFilter: !openFilter })
           }
           backgroundColor={
-            filterOptions.openFilter ? LIGHT_GRAY_COLOR : 'transparent'
+            filterOptions.openFilter ? colors.LIGHT_GRAY : 'transparent'
           }
         >
           <MdCircle
