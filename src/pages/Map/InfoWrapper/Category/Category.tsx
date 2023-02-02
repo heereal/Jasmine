@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { BLACK_COLOR, LIGHT_GRAY_COLOR } from '../../../../common/colors';
+import colors from '../../../../common/colors';
 import { categories } from '../../../../common/data';
 import { useCategory } from '../../../../hooks';
 
@@ -29,7 +29,9 @@ export default function Category({
           onClick={() => handleCategoryClick(category)}
           key={idx}
           // 현재 카테고리일 경우 검은색, 아닐 경우 회색
-          color={currentCategory === category ? BLACK_COLOR : LIGHT_GRAY_COLOR}
+          color={
+            currentCategory === category ? colors.BLACK : colors.LIGHT_GRAY
+          }
         >
           {category}
         </S.Li>

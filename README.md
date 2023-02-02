@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+### 링크
+- 배포 링크: https://jasminebook.vercel.app/
+- 노션 링크: https://react99.notion.site/B-9-a8a272d006344d5dbf5b0d44e8536bc2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+### 프로젝트 소개
 
-In the project directory, you can run:
+<img src="https://user-images.githubusercontent.com/117061017/215396676-7be26fd4-1df0-4724-a0af-66c423ff3c74.png" height="120"/>
 
-### `yarn start`
+- 프로젝트명: 쟈-스민
+- 프로젝트 목적: 지도 API를 이용해 독립 서점의 운영 정보를 제공한다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 팀원
+  | 이름 | GITHUB | BLOG |
+  | --- | --- | --- |
+  | 이희령 | [heereal](https://github.com/heereal) | [Tistory](https://divheer.tistory.com/) |
+  | 박진산 | [wallofwolf](https://github.com/wallofwolf) | [Velog](https://velog.io/@mkdavdi123) |
+  | 성효진 | [su-no](https://github.com/su-no) | [Velog](https://velog.io/@sunohvoiin) |
+  | 김민성 | [GhostPines](https://github.com/GhostPines) | [Tistory](https://talkprogramming.tistory.com/) |
+  | 황준호 | [Juno77](https://github.com/Juno77) | [Tistory](https://curious1.tistory.com/) |
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 기술 스택
 
-### `yarn build`
+- `React`
+- `React Router Dom`
+- `Typescript`
+- `Recoil`
+- `Firebase Firestore`
+- `Styled Components`
+- `React Icons`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### UI 구성
+- Home
+<img src="https://user-images.githubusercontent.com/117061017/215397495-1227e2a8-9084-41df-9b9f-675a1c6d12d0.png" width="100%"/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Map
+<img src="https://user-images.githubusercontent.com/117061017/215397619-bef9d85b-c910-400d-a38e-c9fc9603aaf4.png" width="100%"/>

@@ -11,6 +11,11 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.img`
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
   width: 150px;
   margin-right: 50px;
   cursor: pointer;

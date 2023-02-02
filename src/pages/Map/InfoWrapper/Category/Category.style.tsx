@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, WHITE_COLOR } from '../../../../common/colors';
+import colors from '../../../../common/colors';
 
 export const Container = styled.ul`
   position: absolute;
@@ -11,20 +11,19 @@ export const Container = styled.ul`
 
 export const Li = styled.li`
   z-index: 1;
-  /* color: ${({ color }: any) => color}; */
-  color: ${BLACK_COLOR};
+  color: ${colors.BLACK};
   cursor: pointer;
   display: inline-block;
   padding: 0.6rem 1rem;
-  border: 1px solid ${BLACK_COLOR};
-  background-color: ${WHITE_COLOR};
+  border: 1px solid ${colors.BLACK};
+  background-color: ${colors.WHITE};
   text-align: center;
   font-size: 0.9rem;
   &:not(:first-child) {
     border-top: none;
     &:hover {
-      background-color: ${BLACK_COLOR};
-      color: ${WHITE_COLOR};
+      background-color: ${colors.BLACK};
+      color: ${colors.WHITE};
     }
   }
 `;

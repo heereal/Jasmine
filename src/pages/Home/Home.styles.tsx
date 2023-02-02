@@ -11,11 +11,21 @@ export const MainImageLocation = styled.div`
   width: 100%;
 `;
 export const BackGroundImage = styled.img`
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
   width: 100%;
   height: 70vh;
   object-fit: cover;
 `;
 export const Jasmin = styled.img`
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
   position: absolute;
   height: 70%;
   right: 0;
