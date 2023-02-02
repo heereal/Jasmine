@@ -51,8 +51,8 @@ export default function InfoWrapper({ map }: any) {
   // 검색결과 데이터 끝 여부
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
 
-  // 더보기 버튼 클릭 시 로드할 데이터 개수
   const loadCount = 20;
+  // 더보기 버튼 클릭 시 로드할 데이터 개수
   const [countOfData, setCountOfData] = useState<number>(loadCount);
 
   const {
@@ -60,13 +60,12 @@ export default function InfoWrapper({ map }: any) {
     handleSearch,
     handleResetResult,
     setCurrentCategory,
-    setCafe,
-    setParking,
-    openFilter,
-    setOpenFilter,
+    setFilterOptions,
     currentCategory,
-    cafe,
+    filterOptions,
     parking,
+    cafe,
+    openFilter,
   } = useSearch(DBDefault, search, setDB, setSearch);
 
   // 더보기 버튼 클릭 핸들링 함수
@@ -142,7 +141,6 @@ export default function InfoWrapper({ map }: any) {
 
     // 현재 위치 반경 표시 저장
     setCurrentCircle(circle);
-    // eslint-disable-next-line
   }, [
     currentCircle,
     location,
@@ -152,11 +150,15 @@ export default function InfoWrapper({ map }: any) {
     setDB,
   ]);
 
-  // 필터 변경 시 검색
+  // !필터 변경 시 검색
   useEffect(() => {
     handleSearch();
-    // eslint-disable-next-line
-  }, [currentCategory, cafe, parking, openFilter]);
+  }, [
+    currentCategory,
+    filterOptions.cafe,
+    filterOptions.parking,
+    filterOptions.openFilter,
+  ]);
 
   return (
     <S.Container>
@@ -180,24 +182,34 @@ export default function InfoWrapper({ map }: any) {
         {/* 주차 */}
         <S.Filter
           width="20%"
-          onClick={() => setParking(!parking)}
-          backgroundColor={parking ? colors.LIGHT_GRAY : 'transparent'}
+          onClick={() =>
+            setFilterOptions({ ...filterOptions, parking: !parking })
+          }
+          backgroundColor={
+            filterOptions.parking ? colors.LIGHT_GRAY : 'transparent'
+          }
         >
           <FaParking />
         </S.Filter>
         {/* 카페 */}
         <S.Filter
           width="20%"
-          onClick={() => setCafe(!cafe)}
-          backgroundColor={cafe ? colors.LIGHT_GRAY : 'transparent'}
+          onClick={() => setFilterOptions({ ...filterOptions, cafe: !cafe })}
+          backgroundColor={
+            filterOptions.cafe ? colors.LIGHT_GRAY : 'transparent'
+          }
         >
           <IoCafeOutline />
           {/* 영업상태 */}
         </S.Filter>
         <S.Filter
           width="33%"
-          onClick={() => setOpenFilter(!openFilter)}
-          backgroundColor={openFilter ? colors.LIGHT_GRAY : 'transparent'}
+          onClick={() =>
+            setFilterOptions({ ...filterOptions, openFilter: !openFilter })
+          }
+          backgroundColor={
+            filterOptions.openFilter ? colors.LIGHT_GRAY : 'transparent'
+          }
         >
           <MdCircle
             style={{

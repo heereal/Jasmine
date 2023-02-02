@@ -3,9 +3,12 @@ import { FormEvent, useCallback, useState } from 'react';
 const useSearch = (DBDefault: any, search: any, setDB: any, setSearch: any) => {
   const [currentCategory, setCurrentCategory] =
     useState<string>('카테고리 전체');
-  const [parking, setParking] = useState<boolean>(false);
-  const [cafe, setCafe] = useState<boolean>(false);
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [filterOptions, setFilterOptions] = useState<any>({
+    parking: false,
+    cafe: false,
+    openFilter: false,
+  });
+  const { parking, cafe, openFilter } = filterOptions;
 
   // 검색 핸들링 함수
   const handleSearch = useCallback(() => {
@@ -63,32 +66,21 @@ const useSearch = (DBDefault: any, search: any, setDB: any, setSearch: any) => {
   const handleResetResult = useCallback(() => {
     setDB(DBDefault);
     setCurrentCategory('카테고리 전체');
-    setCafe(false);
-    setParking(false);
-    setOpenFilter(false);
+    setFilterOptions({ ...filterOptions });
     setSearch('');
-  }, [
-    setDB,
-    setCurrentCategory,
-    setCafe,
-    setParking,
-    setOpenFilter,
-    DBDefault,
-    setSearch,
-  ]);
+  }, [setDB, setCurrentCategory, setFilterOptions, DBDefault, setSearch]);
 
   return {
     handleSubmit,
     handleSearch,
     handleResetResult,
     setCurrentCategory,
-    setCafe,
-    setParking,
-    setOpenFilter,
-    openFilter,
+    setFilterOptions,
     currentCategory,
+    filterOptions,
     parking,
     cafe,
+    openFilter,
   };
 };
 
